@@ -1,5 +1,9 @@
 package org.mnowrot.quicklist.service;
 
+import static org.fest.assertions.Assertions.assertThat;
+
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -11,7 +15,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mnowrot.quicklist.model.ListItem;
@@ -24,7 +28,7 @@ import org.mnowrot.quicklist.model.ListItem;
  */
 @RunWith(Arquillian.class)
 public class QuicklistServiceTest {
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -34,19 +38,44 @@ public class QuicklistServiceTest {
 	@EJB
 	private QuicklistService quicklistService;
 
-
 	@Deployment
 	public static WebArchive createDeployment() {
-		return ShrinkWrap.create(WebArchive.class, QuicklistServiceTest.class.getSimpleName() + ".war")
+		return ShrinkWrap
+				.create(WebArchive.class,
+						QuicklistServiceTest.class.getSimpleName() + ".war")
 				.addClass(QuicklistService.class)
 				.addClass(ListItem.class)
 				.addAsResource("META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+				.addAsLibraries(
+						Maven.resolver()
+								.resolve("org.easytesting:fest-assert:1.4")
+								.withTransitivity().asFile());
 	}
 
 	@Test
-	public void getAllItemsTest() {
-		Assert.fail("Not yet implemented");
+	public void getAllItemsTest() throws Exception {
+		// given
+		utx.begin();
+		em.joinTransaction();
+		createListItem("TestListItemName1");
+		createListItem("TestListItemName2");
+
+		// when
+		final List<ListItem> allItems = quicklistService.getAllItems();
+
+		// then
+		assertThat(allItems).isNotNull();
+		assertThat(allItems).isNotEmpty();
+		assertThat(allItems).hasSize(2);
+		utx.rollback();
+
+	}
+
+	private void createListItem(String listItemName) {
+		ListItem li = new ListItem();
+		li.setName(listItemName);
+		em.persist(li);
 	}
 
 }
