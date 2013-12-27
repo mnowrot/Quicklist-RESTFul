@@ -14,6 +14,10 @@ quicklistApp.controller('ListManager', function($scope, $http) {
 			});
 		}
 	};
+	
+	$scope.noItems = function() {
+		return !$scope.items || $scope.items.length == 0;
+	};
 });
 
 function reloadList($scope, $http) {
