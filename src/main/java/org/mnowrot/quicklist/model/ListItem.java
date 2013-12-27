@@ -22,16 +22,16 @@ public class ListItem {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long listItemId;
+	private Long id;
 	
 	private String name;
 
-	public Long getListItemId() {
-		return listItemId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setListItemId(Long listItemId) {
-		this.listItemId = listItemId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
