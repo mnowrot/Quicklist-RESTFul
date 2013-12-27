@@ -70,13 +70,16 @@
 		<!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
 			resources, i.e. build is platform dependent! -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<!-- Wildfly version -->
+		<version.wildfly>8.0.0.CR1</version.wildfly>
 
 		<!-- JBoss dependency versions -->
-		<version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
+		<version.jboss.maven.plugin>7.5.Final</version.jboss.maven.plugin>
 
 		<!-- other plugin versions -->
-		<version.compiler.plugin>2.3.1</version.compiler.plugin>
-		<version.war.plugin>2.1.1</version.war.plugin>
+		<version.compiler.plugin>3.1</version.compiler.plugin>
+		<version.war.plugin>2.4</version.war.plugin>
 
 		<!-- maven-compiler-plugin -->
 		<maven.compiler.target>1.7</maven.compiler.target>
@@ -84,14 +87,7 @@
 
 		<!-- Define the version of the JBoss BOMs we want to import to specify 
 			tested stacks. -->
-		<version.jboss.bom>1.0.4.Final</version.jboss.bom>
-		<!-- Alternatively, comment out the above line, and un-comment the line 
-			below to use version 1.0.4.Final-redhat-3 which is a release certified to 
-			work with JBoss EAP 6. It requires you have access to the JBoss EAP 6 maven 
-			repository. -->
-		<!-- <version.jboss.bom>1.0.4.Final-redhat-3</version.jboss.bom> -->
-
-		<version.arquillian.bom>1.1.2.Final</version.arquillian.bom>
+		<version.jboss.bom>1.0.7.Final</version.jboss.bom>
 		<version.surefire.plugin>2.16</version.surefire.plugin>
 		<version.fest.assert>1.4</version.fest.assert>
 
@@ -115,13 +111,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-bom</artifactId>
-				<version>${version.arquillian.bom}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -142,7 +131,7 @@
 			<artifactId>jboss-annotations-api_1.1_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jboss.spec.javax.transaction</groupId>
 			<artifactId>jboss-transaction-api_1.1_spec</artifactId>
@@ -247,8 +236,9 @@
 			<id>all.tests</id>
 			<dependencies>
 				<dependency>
-					<groupId>org.jboss.as</groupId>
-					<artifactId>jboss-as-arquillian-container-remote</artifactId>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-remote</artifactId>
+					<version>${version.wildfly}</version>
 					<scope>test</scope>
 				</dependency>
 			</dependencies>
