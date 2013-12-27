@@ -54,14 +54,14 @@ public class QuicklistServiceTest {
 	}
 
 	@Test
-	public void getAllItemsTest() throws Exception {
+	public void listPersistenceTest() throws Exception {
 		// given
 		utx.begin();
 		em.joinTransaction();
-		createListItem("TestListItemName1");
-		createListItem("TestListItemName2");
 
-		// when
+		//when
+		quicklistService.addListItem("TestListItemName1");
+		quicklistService.addListItem("TestListItemName2");
 		final List<ListItem> allItems = quicklistService.getAllItems();
 
 		// then
@@ -71,11 +71,4 @@ public class QuicklistServiceTest {
 		utx.rollback();
 
 	}
-
-	private void createListItem(String listItemName) {
-		ListItem li = new ListItem();
-		li.setName(listItemName);
-		em.persist(li);
-	}
-
 }
