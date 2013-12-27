@@ -25,25 +25,24 @@ import javax.persistence.PersistenceContext;
 import org.mnowrot.quicklist.model.ListItem;
 
 /**
- * A simple CDI service which is able to say hello to someone
+ * Service that makes quicklist operations available
  * 
- * @author Pete Muir
+ * @author PLMANOW4
  * 
  */
 @Stateless
 public class QuicklistService {
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
-    @SuppressWarnings("unchecked")
 	public List<ListItem> getAllItems() {
-        return em.createNamedQuery("findAll").getResultList();
-    }
+		return em.createNamedQuery("findAll", ListItem.class).getResultList();
+	}
 
 	public void addListItem(String listItemName) {
 		ListItem newItem = new ListItem();
 		newItem.setName(listItemName);
-		em.persist(newItem);	
+		em.persist(newItem);
 	}
 }

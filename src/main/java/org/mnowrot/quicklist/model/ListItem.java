@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "findAll", query = "FROM ListItem")
+	@NamedQuery(name = "findAll", query = "SELECT li FROM ListItem li")
 })
 public class ListItem {
 	
