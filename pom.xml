@@ -149,7 +149,8 @@
         </plugins>
     </build>
 
-    <artifactId>quicklist-angularjs</artifactId>
-    <name>Quicklist with AngularJS</name>
+    <artifactId>quicklist</artifactId>
+    <name>Quicklist</name>
+    <description>Testbed for various UI libraries</description>
 </project>
 
