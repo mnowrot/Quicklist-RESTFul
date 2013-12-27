@@ -31,7 +31,7 @@ import org.mnowrot.quicklist.service.QuicklistService;
 @Path("/")
 public class QuicklistRestful {
     @EJB
-    QuicklistService quicklistService;
+    private QuicklistService quicklistService;
 
     @GET
     @Path("/all")
@@ -42,7 +42,7 @@ public class QuicklistRestful {
     
     @POST
     @Path("/add")
-    public void addListItem(@FormParam("text") String text) {
-        quicklistService.addListItem(text);
+    public void addListItem(@FormParam("listItemName") String listItemName) {
+        quicklistService.addListItem(listItemName);
     }
 }

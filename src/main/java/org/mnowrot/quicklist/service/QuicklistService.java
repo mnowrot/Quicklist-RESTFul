@@ -41,9 +41,9 @@ public class QuicklistService {
         return em.createNamedQuery("findAll").getResultList();
     }
 
-	public void addListItem(String text) {
+	public void addListItem(String listItemName) {
 		ListItem newItem = new ListItem();
-		newItem.setText(text);
+		newItem.setName(listItemName);
 		em.persist(newItem);	
 	}
 }

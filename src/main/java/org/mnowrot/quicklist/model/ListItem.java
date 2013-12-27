@@ -24,7 +24,7 @@ public class ListItem {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long listItemId;
 	
-	private String text;
+	private String name;
 
 	public Long getListItemId() {
 		return listItemId;
@@ -34,11 +34,11 @@ public class ListItem {
 		this.listItemId = listItemId;
 	}
 
-	public String getText() {
-		return text;
+	public String getName() {
+		return name;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setName(String name) {
+		this.name = name;
 	}
 }
