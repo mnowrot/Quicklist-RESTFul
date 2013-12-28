@@ -19,20 +19,18 @@ quicklistApp.controller('ListManager', function($scope, $http) {
 	
 	$scope.openRemoveItemModal = function(item) {
 		if(item) {
-			$scope.itemToDelete = angular.copy(item);
+			$scope.itemToRemove = angular.copy(item);
 			$('#removeYesNoModal').modal();
 		}
 	};
 	
 	$scope.removeItem = function() {
-		var item = $scope.itemToDelete;
+		var item = $scope.itemToRemove;
 		if(item) {
 			$http.delete('qlist/item/' + item.id)
 			.success(function(data) {
 				reloadList($scope, $http);
 			});
-			//clean up
-			$scope.itemToDelete = null;
 		}
 	};
 	
