@@ -41,7 +41,8 @@
 				<td>{{item.id}}</td>
 				<td>{{item.name}}</td>
 				<td>
-					<button type="button" class="btn btn-default btn-xs" ng-click="removeItem(item)">
+					<button type="button" class="btn btn-default btn-xs"
+						ng-click="openRemoveItemModal(item)">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
 				</td>
@@ -51,6 +52,29 @@
 			</tr>
 		</tbody>
 	</table>
+
+	<!-- List item delete "Are you sure?" modal -->
+	<div class="modal fade" id="removeYesNoModal" tabindex="-1" role="dialog"
+		aria-labelledby=removeYesNoModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="removeYesNoModal">Delete List Item</h4>
+				</div>
+				<div class="modal-body">Are you sure you wish to delete '{{itemToDelete.name}}'?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="removeItem()">Yes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="lib/js/jquery-1.10.2.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
