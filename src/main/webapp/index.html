@@ -17,21 +17,27 @@
 </head>
 <body ng-controller="ListManager">
 	<!-- List refresh failure alert -->
-	<div id="listRefreshFailAlert" class="alert alert-danger alert-dismissable fade">
-		<strong>Error!</strong> Cannot reload item list due to a server-side failure. Please refresh the page.
+	<div id="listRefreshFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot reload item list due to a server-side
+		failure. Please refresh the page.
 	</div>
 	<!-- List addition failure alert -->
-	<div id="listAddFailAlert" class="alert alert-danger alert-dismissable fade">
-		<strong>Error!</strong> Cannot add an item to the list due to a server-side failure. Please refresh the page.
+	<div id="listAddFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot add an item to the list due to a
+		server-side failure. Please refresh the page.
 	</div>
 	<!-- List deletion failure alert -->
-	<div id="listRemoveFailAlert" class="alert alert-danger alert-dismissable fade">
-		<strong>Error!</strong> Cannot remove an item from the list due to a server-side failure. Please refresh the page.
+	<div id="listRemoveFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot remove an item from the list due to a
+		server-side failure. Please refresh the page.
 	</div>
 	<!-- Item deletion success alert -->
-	<div id="listRemoveSuccessAlert" class="alert alert-success alert-dismissable fade">
-		Successfully removed item '{{itemRemoved.name}}'.
-	</div>
+	<div id="listRemoveSuccessAlert"
+		class="alert alert-success alert-dismissable fade">Successfully
+		removed item '{{itemRemoved.name}}'.</div>
 	<!-- /.alerts -->
 
 	<div class="jumbotron">
@@ -74,16 +80,15 @@
 
 	<!-- List item delete "Are you sure?" modal -->
 	<div class="modal fade" id="removeYesNoModal" tabindex="-1"
-		role="dialog" aria-labelledby=removeYesNoModalLabel
-		aria-hidden="true">
+		role="dialog" aria-labelledby=removeYesNoModalLabel aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="removeYesNoModal">Delete List Item</h4>
+					<h4 class="modal-title" id="removeYesNoModal">Remove List Item</h4>
 				</div>
-				<div class="modal-body">Are you sure you wish to delete
+				<div class="modal-body">Are you sure you wish to remove
 					'{{itemToRemove.name}}'?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal"
