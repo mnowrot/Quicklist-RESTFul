@@ -16,6 +16,24 @@
     <![endif]-->
 </head>
 <body ng-controller="ListManager">
+	<!-- List refresh failure alert -->
+	<div id="listRefreshFailAlert" class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot reload item list due to a server-side failure. Please refresh the page.
+	</div>
+	<!-- List addition failure alert -->
+	<div id="listAddFailAlert" class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot add an item to the list due to a server-side failure. Please refresh the page.
+	</div>
+	<!-- List deletion failure alert -->
+	<div id="listRemoveFailAlert" class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot remove an item from the list due to a server-side failure. Please refresh the page.
+	</div>
+	<!-- Item deletion success alert -->
+	<div id="listRemoveSuccessAlert" class="alert alert-success alert-dismissable fade">
+		Successfully removed item '{{itemRemoved.name}}'.
+	</div>
+	<!-- /.alerts -->
+
 	<div class="jumbotron">
 		<h1>Enter a new list item:</h1>
 		<form class="form-inline" role="form">
@@ -28,6 +46,7 @@
 				ng-click="addItem()">Submit</button>
 		</form>
 	</div>
+
 	<table id="listItemsTable" class="table table-striped">
 		<thead>
 			<tr>
@@ -54,8 +73,9 @@
 	</table>
 
 	<!-- List item delete "Are you sure?" modal -->
-	<div class="modal fade" id="removeYesNoModal" tabindex="-1" role="dialog"
-		aria-labelledby=removeYesNoModalLabel" aria-hidden="true">
+	<div class="modal fade" id="removeYesNoModal" tabindex="-1"
+		role="dialog" aria-labelledby=removeYesNoModalLabel
+		" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -63,9 +83,11 @@
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="removeYesNoModal">Delete List Item</h4>
 				</div>
-				<div class="modal-body">Are you sure you wish to delete '{{itemToRemove.name}}'?</div>
+				<div class="modal-body">Are you sure you wish to delete
+					'{{itemToRemove.name}}'?</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="removeItem()">Yes</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						ng-click="removeItem()">Yes</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
 				</div>
 			</div>
@@ -83,6 +105,7 @@
 	<script src="lib/js/angular-1.2.6.min.js"></script>
 
 	<!-- Local JS -->
-	<script src="js/controllers.js"></script>
+	<script src="js/view.js"></script>
+	<script src="js/controller.js"></script>
 </body>
 </html>
