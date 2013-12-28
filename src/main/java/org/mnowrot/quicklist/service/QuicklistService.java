@@ -40,9 +40,15 @@ public class QuicklistService {
 		return em.createNamedQuery("findAll", ListItem.class).getResultList();
 	}
 
-	public void addListItem(String listItemName) {
+	public ListItem addItem(String listItemName) {
 		ListItem newItem = new ListItem();
 		newItem.setName(listItemName);
 		em.persist(newItem);
+		return newItem;
+	}
+
+	public void removeItem(Long listItemId) {
+		ListItem toRemove = em.find(ListItem.class, listItemId);
+		em.remove(toRemove);
 	}
 }

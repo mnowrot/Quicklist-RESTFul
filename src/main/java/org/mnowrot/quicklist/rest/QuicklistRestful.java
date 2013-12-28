@@ -19,10 +19,12 @@ package org.mnowrot.quicklist.rest;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.mnowrot.quicklist.model.ListItem;
@@ -43,6 +45,12 @@ public class QuicklistRestful {
     @POST
     @Path("/add")
     public void addListItem(@FormParam("listItemName") String listItemName) {
-        quicklistService.addListItem(listItemName);
+        quicklistService.addItem(listItemName);
+    }
+    
+    @DELETE
+    @Path("/item/{listItemId}")
+    public void removeItem(@PathParam("listItemId") Long listItemId) {
+        quicklistService.removeItem(listItemId);
     }
 }

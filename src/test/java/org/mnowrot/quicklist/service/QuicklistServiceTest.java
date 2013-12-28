@@ -60,8 +60,8 @@ public class QuicklistServiceTest {
 		em.joinTransaction();
 
 		//when
-		quicklistService.addListItem("TestListItemName1");
-		quicklistService.addListItem("TestListItemName2");
+		quicklistService.addItem("TestListItemName1");
+		quicklistService.addItem("TestListItemName2");
 		final List<ListItem> allItems = quicklistService.getAllItems();
 
 		// then
@@ -70,5 +70,24 @@ public class QuicklistServiceTest {
 		assertThat(allItems).hasSize(2);
 		utx.rollback();
 
+	}
+	
+	@Test
+	public void listDeletionTest() throws Exception {
+		// given
+		utx.begin();
+		em.joinTransaction();
+		ListItem toDelete = quicklistService.addItem("TestListItemName1");
+		quicklistService.addItem("TestListItemName2");
+
+		//when
+		quicklistService.removeItem(toDelete.getId());
+		final List<ListItem> allItems = quicklistService.getAllItems();
+
+		// then
+		assertThat(allItems).isNotNull();
+		assertThat(allItems).isNotEmpty();
+		assertThat(allItems).hasSize(1);
+		utx.rollback();
 	}
 }
