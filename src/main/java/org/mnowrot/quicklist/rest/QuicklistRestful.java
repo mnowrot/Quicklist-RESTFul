@@ -16,8 +16,6 @@
  */
 package org.mnowrot.quicklist.rest;
 
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -26,31 +24,46 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.CacheControl;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
-import org.mnowrot.quicklist.model.ListItem;
 import org.mnowrot.quicklist.service.QuicklistService;
 
 @Path("/")
 public class QuicklistRestful {
-    @EJB
-    private QuicklistService quicklistService;
+	
+	private static final CacheControl NO_CACHE = noCache();
+	
+	@EJB
+	private QuicklistService quicklistService;
 
-    @GET
-    @Path("/all")
-    @Produces("application/json")
-    public List<ListItem> getAllItems() {
-        return quicklistService.getAllItems();
-    }
-    
-    @POST
-    @Path("/add")
-    public void addListItem(@FormParam("listItemName") String listItemName) {
-        quicklistService.addItem(listItemName);
-    }
-    
-    @DELETE
-    @Path("/item/{listItemId}")
-    public void removeItem(@PathParam("listItemId") Long listItemId) {
-        quicklistService.removeItem(listItemId);
-    }
+	@GET
+	@Path("/all")
+	@Produces("application/json")
+	public Response getAllItems() {
+		ResponseBuilder builder = Response.ok(quicklistService.getAllItems());
+		builder.cacheControl(NO_CACHE); // workaround for IE9 response caching
+		return builder.build();
+	}
+
+	@POST
+	@Path("/add")
+	public void addListItem(@FormParam("listItemName") String listItemName) {
+		quicklistService.addItem(listItemName);
+	}
+
+	@DELETE
+	@Path("/item/{listItemId}")
+	public void removeItem(@PathParam("listItemId") Long listItemId) {
+		quicklistService.removeItem(listItemId);
+	}
+	
+	private static CacheControl noCache() {
+		CacheControl cc = new CacheControl();
+		cc.setNoCache(true);
+		cc.setNoStore(true);
+		cc.setMustRevalidate(true);
+		return cc;
+	}
 }
