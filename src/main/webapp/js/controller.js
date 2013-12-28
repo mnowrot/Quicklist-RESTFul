@@ -37,7 +37,7 @@ quicklistApp.controller('ListManager', function($scope, $http) {
 			}).error(function(data, status) {
 				view.showAlert('listRemoveFailAlert');
 			});
-		}
+		};
 	};
 	
 	reloadList($scope, $http);
@@ -49,4 +49,4 @@ function reloadList($scope, $http) {
 	}).error(function(data, status) {
 		view.showAlert('listRefreshFailAlert');
 	});
-}
+};
