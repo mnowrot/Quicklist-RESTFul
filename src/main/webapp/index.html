@@ -46,7 +46,7 @@
 			<div class="form-group">
 				<label class="sr-only" for="newListItemInput">New list item</label>
 				<input type="text" class="form-control wide" id="newListItemInput"
-					placeholder="New list item" ng-model="newItemName">
+					placeholder="New list item" ng-model="newItemName" ng-keyup="newListItemInputKeyUp($event)">
 			</div>
 			<button type="button" class="btn btn-default btn-margin"
 				ng-click="addItem()">Submit</button>

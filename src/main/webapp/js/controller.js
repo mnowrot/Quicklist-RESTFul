@@ -40,6 +40,12 @@ quicklistApp.controller('ListManager', function($scope, $http) {
 		};
 	};
 	
+	$scope.newListItemInputKeyUp = function($event) {
+		if($event.keyCode === 13) {
+			$scope.addItem();
+		}
+	};
+	
 	reloadList($scope, $http);
 });
 
