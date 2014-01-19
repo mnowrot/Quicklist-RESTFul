@@ -6,7 +6,7 @@ quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 	$scope.addItem = function() {
 		var newItemName = $scope.newItemName;
 		if(newItemName && newItemName.length > 0) {
-			$http.post('qlist/add', 'newItemName=' + newItemName, 
+			$http.post('qlist/add', 'newItemName=' + encodeURIComponent(newItemName), 
 					{headers: {'Content-Type' : 'application/x-www-form-urlencoded'}})
 			.success(function(data) {
 				$scope.newItemName = '';
@@ -63,7 +63,7 @@ quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 	$scope.saveEditedItem = function() {
 		var item = $scope.itemToEdit;
 		if(item) {
-			$http.put('qlist/item/' + item.id, 'editedItemName=' + item.name, 
+			$http.put('qlist/item/' + item.id, 'editedItemName=' + encodeURIComponent(item.name), 
 					{headers: {'Content-Type' : 'application/x-www-form-urlencoded'}})
 			.success(function(data) {
 				$scope.finishItemEdition();
