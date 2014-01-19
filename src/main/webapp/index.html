@@ -71,8 +71,10 @@
 			<tr ng-repeat="item in items">
 				<td>{{item.id}}</td>
 				<td ng-hide="isItemEdited(item)" ng-dblclick="editItem(item)">{{item.name}}</td>
-				<td ng-show="isItemEdited(item)"><input type="text" class="form-control tabular" 
-					ng-model="itemToEdit.name" ng-keyup="saveEditedListItemOnEnter($event)"></td>
+				<td ng-show="isItemEdited(item)">
+					<input type="text" class="form-control tabular" ng-model="itemToEdit.name" 
+					ng-keyup="saveEditedListItemOnEnter($event)" focus-id="inputListItemName">
+				</td>
 				<td>
 					<button type="button" class="btn btn-default btn-xs"
 						ng-hide="isItemEdited(item)" ng-click="editItem(item)">
@@ -130,6 +132,9 @@
 	<script src="lib/js/angular-1.2.6.min.js"></script>
 
 	<!-- Local JS -->
+	<script src="js/application.js"></script>
+	<script src="js/directives.js"></script>
+	<script src="js/factories.js"></script>
 	<script src="js/view.js"></script>
 	<script src="js/controller.js"></script>
 </body>

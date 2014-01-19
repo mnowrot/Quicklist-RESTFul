@@ -1,0 +1,1 @@
+var quicklistApp = angular.module('quicklistApp', []);

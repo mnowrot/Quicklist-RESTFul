@@ -1,6 +1,4 @@
-var quicklistApp = angular.module('quicklistApp', []);
-
-quicklistApp.controller('ListManager', function($scope, $http) {
+quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 	$scope.noItems = function() {
 		return !$scope.items || $scope.items.length == 0;
 	};
@@ -49,6 +47,7 @@ quicklistApp.controller('ListManager', function($scope, $http) {
 	$scope.editItem = function(item) {
 		if(item) {
 			$scope.itemToEdit = angular.copy(item);
+			sendFocus('inputListItemName');
 		}
 	};
 	
