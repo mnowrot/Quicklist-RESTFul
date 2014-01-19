@@ -90,4 +90,26 @@ public class QuicklistServiceTest {
 		assertThat(allItems).hasSize(1);
 		utx.rollback();
 	}
+	
+	@Test
+	public void listEditionTest() throws Exception {
+		// given
+		utx.begin();
+		em.joinTransaction();
+		ListItem toEdit = quicklistService.addItem("TestListItemName1");
+		quicklistService.addItem("TestListItemName2");
+
+		//when
+		quicklistService.editItemName(toEdit.getId(), "TestListItemName3");
+		final List<ListItem> allItems = quicklistService.getAllItems();
+		final ListItem edited = quicklistService.getItemById(toEdit.getId());
+
+		// then
+		assertThat(allItems).isNotNull();
+		assertThat(allItems).isNotEmpty();
+		assertThat(allItems).hasSize(2);
+		assertThat(edited).isNotNull();
+		assertThat(edited.getName()).isEqualTo("TestListItemName3");
+		utx.rollback();
+	}
 }

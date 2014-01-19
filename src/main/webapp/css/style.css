@@ -7,3 +7,17 @@
 .wide {
 	width: 500px;
 }
+
+.idColumn {
+	width: 5%
+}
+
+.nameColumn {
+	width: 28%;
+}
+
+.tabular {
+	height: 23px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}

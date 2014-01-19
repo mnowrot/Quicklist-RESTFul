@@ -21,6 +21,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -49,8 +50,8 @@ public class QuicklistRestful {
 
 	@POST
 	@Path("/add")
-	public void addListItem(@FormParam("listItemName") String listItemName) {
-		quicklistService.addItem(listItemName);
+	public void addListItem(@FormParam("newItemName") String newItemName) {
+		quicklistService.addItem(newItemName);
 	}
 
 	@DELETE
@@ -65,5 +66,12 @@ public class QuicklistRestful {
 		cc.setNoStore(true);
 		cc.setMustRevalidate(true);
 		return cc;
+	}
+	
+	@PUT
+	@Path("/item/{listItemId}")
+	public void editListItem(@PathParam("listItemId") Long listItemId, 
+			@FormParam("editedItemName") String editedItemName) {
+		quicklistService.editItemName(listItemId, editedItemName);
 	}
 }

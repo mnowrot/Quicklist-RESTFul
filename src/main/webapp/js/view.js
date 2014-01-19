@@ -4,18 +4,26 @@ var view = {
 	},
 	
 	showAlert: function(id) {
-		$('#' + id).show();
-		$('#' + id).addClass('in');
+		var alert = $('#' + id);
+		if(alert) {
+			alert.show();
+			alert.addClass('in');
+		}
+	},
+	
+	hideAlert: function(id) {
+		var alert = $('#' + id);
+		if(alert) {
+			alert.removeClass('in');
+			alert.hide();
+		}
 	},
 
 	showHideAlert: function(id) {
-		this.showAlert(id);
+		var that = this;
+		that.showAlert(id);
 		window.setTimeout(function() {
-			var alert = $('#' + id);
-			if(alert) {
-				alert.removeClass('in');
-				alert.hide();
-			}
+			that.hideAlert(id);
 		}, 3000);
 	},
 
@@ -24,6 +32,7 @@ var view = {
 		$('#listRefreshFailAlert').hide();
 		$('#listAddFailAlert').hide();
 		$('#listRemoveFailAlert').hide();
+		$('#listEditFailAlert').hide();
 	}
 };
 

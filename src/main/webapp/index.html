@@ -28,7 +28,7 @@
 		<strong>Error!</strong> Cannot add an item to the list due to a
 		server-side failure. Please refresh the page.
 	</div>
-	<!-- List deletion failure alert -->
+	<!-- Item deletion failure alert -->
 	<div id="listRemoveFailAlert"
 		class="alert alert-danger alert-dismissable fade">
 		<strong>Error!</strong> Cannot remove an item from the list due to a
@@ -38,6 +38,12 @@
 	<div id="listRemoveSuccessAlert"
 		class="alert alert-success alert-dismissable fade">Successfully
 		removed item '{{itemRemoved.name}}'.</div>
+	<!-- Item edition failure alert -->
+	<div id="listEditFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot edit an item on the list due to a
+		server-side failure. Please retry the edition.
+	</div>
 	<!-- /.alerts -->
 
 	<div class="jumbotron">
@@ -46,7 +52,7 @@
 			<div class="form-group">
 				<label class="sr-only" for="newListItemInput">New list item</label>
 				<input type="text" class="form-control wide" id="newListItemInput"
-					placeholder="New list item" ng-model="newItemName" ng-keyup="newListItemInputKeyUp($event)">
+					placeholder="New list item" ng-model="newItemName" ng-keyup="saveNewListItemOnEnter($event)">
 			</div>
 			<button type="button" class="btn btn-default btn-margin"
 				ng-click="addItem()">Submit</button>
@@ -56,18 +62,32 @@
 	<table id="listItemsTable" class="table table-striped">
 		<thead>
 			<tr>
-				<th>ID#</th>
-				<th>Name</th>
+				<th class="idColumn">ID#</th>
+				<th class="nameColumn">Name</th>
 				<th>Options</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in items">
 				<td>{{item.id}}</td>
-				<td>{{item.name}}</td>
+				<td ng-hide="isItemEdited(item)">{{item.name}}</td>
+				<td ng-show="isItemEdited(item)"><input type="text" class="form-control tabular" 
+					ng-model="itemToEdit.name" ng-keyup="saveNewListItemOnEnter($event)"></td>
 				<td>
 					<button type="button" class="btn btn-default btn-xs"
-						ng-click="openRemoveItemModal(item)">
+						ng-hide="isItemEdited(item)" ng-click="editItem(item)">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs"
+						ng-show="isItemEdited(item)" ng-click="saveEditedItem()">
+						<span class="glyphicon glyphicon-ok-circle"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs"
+						ng-show="isItemEdited(item)" ng-click="finishItemEdition()">
+						<span class="glyphicon glyphicon-remove-circle"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs"
+						ng-hide="isItemEdited(item)" ng-click="openRemoveItemModal(item)">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
 				</td>

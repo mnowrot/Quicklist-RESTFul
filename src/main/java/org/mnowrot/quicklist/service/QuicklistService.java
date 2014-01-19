@@ -39,16 +39,25 @@ public class QuicklistService {
 	public List<ListItem> getAllItems() {
 		return em.createNamedQuery("findAll", ListItem.class).getResultList();
 	}
+	
+	public ListItem getItemById(Long listItemId) {
+		return em.find(ListItem.class, listItemId);
+	}
 
-	public ListItem addItem(String listItemName) {
+	public ListItem addItem(String newItemName) {
 		ListItem newItem = new ListItem();
-		newItem.setName(listItemName);
+		newItem.setName(newItemName);
 		em.persist(newItem);
 		return newItem;
 	}
 
 	public void removeItem(Long listItemId) {
-		ListItem toRemove = em.find(ListItem.class, listItemId);
+		ListItem toRemove = getItemById(listItemId);
 		em.remove(toRemove);
+	}
+
+	public void editItemName(Long listItemId, String editedItemName) {
+		ListItem toEdit = getItemById(listItemId);
+		toEdit.setName(editedItemName);
 	}
 }
