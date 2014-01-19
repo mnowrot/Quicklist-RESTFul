@@ -75,6 +75,12 @@ quicklistApp.controller('ListManager', function($scope, $http) {
 		};
 	}
 	
+	$scope.saveEditedListItemOnEnter = function($event) {
+		if($event.keyCode === 13) {
+			$scope.saveEditedItem();
+		}
+	};
+	
 	reloadList($scope, $http);
 });
 

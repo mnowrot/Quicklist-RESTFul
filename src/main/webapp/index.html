@@ -72,7 +72,7 @@
 				<td>{{item.id}}</td>
 				<td ng-hide="isItemEdited(item)">{{item.name}}</td>
 				<td ng-show="isItemEdited(item)"><input type="text" class="form-control tabular" 
-					ng-model="itemToEdit.name" ng-keyup="saveNewListItemOnEnter($event)"></td>
+					ng-model="itemToEdit.name" ng-keyup="saveEditedListItemOnEnter($event)"></td>
 				<td>
 					<button type="button" class="btn btn-default btn-xs"
 						ng-hide="isItemEdited(item)" ng-click="editItem(item)">
