@@ -6,7 +6,7 @@ quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 	$scope.addItem = function() {
 		var newItemName = $scope.newItemName;
 		if(newItemName && newItemName.length > 0) {
-			$http.post('qlist/add', 'newItemName=' + encodeURIComponent(newItemName), 
+			$http.post('/quicklist-core/qlist/add', 'newItemName=' + encodeURIComponent(newItemName), 
 					{headers: {'Content-Type' : 'application/x-www-form-urlencoded'}})
 			.success(function(data) {
 				$scope.newItemName = '';
@@ -27,7 +27,7 @@ quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 	$scope.removeItem = function() {
 		var item = $scope.itemToRemove;
 		if(item) {
-			$http.delete('qlist/item/' + item.id)
+			$http.delete('/quicklist-core/qlist/item/' + item.id)
 			.success(function(data) {
 				$scope.itemRemoved =  angular.copy(item); // for alert
 				view.showHideAlert('listRemoveSuccessAlert');
@@ -63,7 +63,7 @@ quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 	$scope.saveEditedItem = function() {
 		var item = $scope.itemToEdit;
 		if(item) {
-			$http.put('qlist/item/' + item.id, 'editedItemName=' + encodeURIComponent(item.name), 
+			$http.put('/quicklist-core/qlist/item/' + item.id, 'editedItemName=' + encodeURIComponent(item.name), 
 					{headers: {'Content-Type' : 'application/x-www-form-urlencoded'}})
 			.success(function(data) {
 				$scope.finishItemEdition();
@@ -84,7 +84,7 @@ quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 });
 
 function reloadList($scope, $http) {
-	$http.get('qlist/all').success(function(data) {
+	$http.get('/quicklist-core/qlist/all').success(function(data) {
 		$scope.items = data;
 	}).error(function(data, status) {
 		view.showAlert('listRefreshFailAlert');
