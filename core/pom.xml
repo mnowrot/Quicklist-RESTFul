@@ -21,7 +21,7 @@
 
 	<packaging>war</packaging>
 	<artifactId>quicklist-core</artifactId>
-	<name>Quicklist Core Rest API</name>
+	<name>Quicklist Core RESTful API</name>
 
 	<dependencyManagement>
 		<dependencies>
@@ -117,12 +117,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<!-- Set the name of the war, used as the context root when the app is 
-			deployed. -->
-		<finalName>quicklist-core</finalName>
-	</build>
 
 	<profiles>
 		<profile>

@@ -76,6 +76,10 @@
 		</pluginRepository>
 	</pluginRepositories>
 	
+	<build>
+		<finalName>${project.artifactId}</finalName>
+	</build>
+	
 	<profiles>
 		<profile>
 			<id>default</id>
@@ -126,6 +130,6 @@
 
 	<modules>
 		<module>core</module>
-		<module>angular-js</module>
+		<module>angularjs</module>
 	</modules>
 </project>

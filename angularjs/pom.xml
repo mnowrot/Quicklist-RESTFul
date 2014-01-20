@@ -20,14 +20,8 @@
 	</parent>
 
 	<packaging>war</packaging>
-	<artifactId>quicklist-angular-js</artifactId>
+	<artifactId>quicklist-angularjs</artifactId>
 	<name>Quicklist client side written in AngularJS</name>
-
-	<build>
-		<!-- Set the name of the war, used as the context root when the app is 
-			deployed. -->
-		<finalName>quicklist-angularjs</finalName>
-	</build>
 
 	<profiles>
 		<profile>
