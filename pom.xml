@@ -60,6 +60,8 @@
 
 		<!-- Selenium version -->
 		<version.selenium.java>2.39.0</version.selenium.java>
+		<!-- JUnit version -->
+		<version.junit>4.8.2</version.junit>
 	</properties>
 
 	<pluginRepositories>
