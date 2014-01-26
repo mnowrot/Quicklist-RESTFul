@@ -19,19 +19,34 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<packaging>war</packaging>
-	<artifactId>quicklist-angularjs</artifactId>
-	<name>Quicklist client side written in AngularJS</name>
+	<packaging>jar</packaging>
+	<artifactId>quicklist-testwebdriver</artifactId>
+	<name>Quicklist functional tests</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${version.selenium.java}</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
-			<!-- JBoss AS plugin to deploy war -->
 			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>${version.jboss.maven.plugin}</version>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>
 				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 					<skip>false</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${version.surefire.plugin}</version>
+				<configuration>
+					<skipTests>false</skipTests>
 				</configuration>
 			</plugin>
 		</plugins>
