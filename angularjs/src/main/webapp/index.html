@@ -88,7 +88,7 @@
 						ng-show="isItemEdited(item)" ng-click="finishItemEdition()">
 						<span class="glyphicon glyphicon-remove-circle"></span>
 					</button>
-					<button type="button" class="btn btn-default btn-xs"
+					<button type="button" class="btn btn-default btn-xs" id="removeItemButton"
 						ng-hide="isItemEdited(item)" ng-click="openRemoveItemModal(item)">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
@@ -113,7 +113,7 @@
 				<div class="modal-body">Are you sure you wish to remove
 					'{{itemToRemove.name}}'?</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal"
+					<button type="button" class="btn btn-primary" data-dismiss="modal"  id="confirmItemRemovalButton"
 						ng-click="removeItem()">Yes</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
 				</div>
