@@ -60,6 +60,9 @@
 				<version>${version.surefire.plugin}</version>
 				<configuration>
 					<skipTests>false</skipTests>
+					<suiteXmlFiles>
+						<suiteXmlFile>src/test/resources/suite-angularjs.xml</suiteXmlFile>
+					</suiteXmlFiles>
 				</configuration>
 			</plugin>
 		</plugins>

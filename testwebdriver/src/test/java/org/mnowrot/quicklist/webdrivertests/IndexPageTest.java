@@ -7,10 +7,13 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.List;
 
-import org.mnowrot.quicklist.webdrivertests.config.BrowserAndUrlProvider;
+import org.mnowrot.quicklist.webdrivertests.config.BrowserProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 /**
@@ -19,8 +22,23 @@ import org.testng.annotations.Test;
  */
 public class IndexPageTest {
 	
-	@Test(dataProvider = "browserAndUrlProvider", dataProviderClass = BrowserAndUrlProvider.class)
-	public void shouldShowOneRowInEmptyTableTest(WebDriver browser, String url) {
+	private String url;
+	private WebDriver browser;
+	
+	@BeforeTest
+	@Parameters({"url"})
+	public void setUpUrl(String url) {
+		this.url = url;
+	}
+	
+	@BeforeTest
+	@Parameters({"browser"})
+	public void setUpBrowser(String browserName) {
+		this.browser = BrowserProvider.provideBrowserByName(browserName);
+	}
+	
+	@Test
+	public void shouldShowOneRowInEmptyTableTest() {
 		// given
 		browser.get(url);
 		
@@ -31,9 +49,8 @@ public class IndexPageTest {
 		assertThat(tableSize).isEqualTo(1);
 	}
 	
-	@Test(dataProvider = "browserAndUrlProvider", dataProviderClass = BrowserAndUrlProvider.class, 
-			dependsOnMethods = {"shouldShowOneRowInEmptyTableTest"})
-	public void shouldAddListItemOnClickTest(WebDriver browser, String url) {
+	@Test(dependsOnMethods = {"shouldShowOneRowInEmptyTableTest"})
+	public void shouldAddListItemOnClickTest() {
 		// given
 		String itemName = "FirstListItem";
 		WebElement newListItemInput = browser.findElement(By.id("newListItemInput"));
@@ -46,13 +63,12 @@ public class IndexPageTest {
 		// then
 		List<WebElement> newListItemCells = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr/td"));
 		assertThat(newListItemCells).isNotNull();
-		assertThat(newListItemCells).hasSize(3);
+		assertThat(newListItemCells).hasSize(4);
 		assertThat(newListItemCells.get(1).getText()).isEqualTo(itemName);
 	}
 	
-	@Test(dataProvider = "browserAndUrlProvider", dataProviderClass = BrowserAndUrlProvider.class, 
-			dependsOnMethods = {"shouldAddListItemOnClickTest"})
-	public void shutdown(WebDriver browser, String url) {
+	@AfterTest
+	public void shutdownBrowser() {
 		browser.quit();
 	}
 }
