@@ -23,25 +23,20 @@ import org.testng.annotations.Test;
  */
 public class IndexPageTest {
 
-	private String url;
 	private WebDriver browser;
 
 	@BeforeTest
-	@Parameters({ "url" })
-	public void setUpUrl(String url) {
-		this.url = url;
-	}
-
-	@BeforeTest
-	@Parameters({ "browser" })
-	public void setUpBrowser(String browserName) {
+	@Parameters({ "url", "browser" })
+	public void prepareBrowserAndPage(String url, String browserName) {
 		this.browser = BrowserProvider.provideBrowserByName(browserName);
+		browser.manage().deleteAllCookies();
+		browser.get(url);
+		deleteAllItems();
 	}
 
 	@Test
 	public void shouldShowOneRowInEmptyTableTest() {
 		// given
-		browser.get(url);
 
 		// when
 		int tableSize = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr")).size();
@@ -100,11 +95,90 @@ public class IndexPageTest {
 
 		// then
 		String itemNameAfterEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]")).getText();
-		assertThat(itemNameBeforeEdition).isEqualTo(itemNameAfterEdition);
+		assertThat(itemNameAfterEdition).isEqualTo(itemNameBeforeEdition);
+	}
+	
+	@Test(dependsOnMethods = { "shouldCancelItemEditionTest" })
+	public void shouldEditItemOnClickTest() {
+		// given
+		WebElement editItemButton = browser.findElements(By.id("editItemButton")).get(0);
+		WebElement saveEditedItemButton = browser.findElements(By.id("saveEditedItemButton")).get(0);
+		String editedItemText = "Edited FirstListItem";
+		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[3]/input"));
+
+		// when
+		editItemButton.click();
+		itemEditBox.clear();
+		itemEditBox.sendKeys(editedItemText);
+		saveEditedItemButton.click();
+
+		// then
+		String itemNameAfterEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]")).getText();
+		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
+	}
+	
+	@Test(dependsOnMethods = { "shouldEditItemOnClickTest" })
+	public void shouldEditItemOnEnterTest() {
+		// given
+		WebElement editItemButton = browser.findElements(By.id("editItemButton")).get(1);
+		String editedItemText = "Edited SecondListItem";
+		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[2]/td[3]/input"));
+
+		// when
+		editItemButton.click();
+		itemEditBox.clear();
+		itemEditBox.sendKeys(editedItemText);
+		itemEditBox.sendKeys("\n");
+
+		// then
+		String itemNameAfterEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[2]/td[2]")).getText();
+		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
+	}
+	
+	@Test(dependsOnMethods = { "shouldEditItemOnEnterTest" })
+	public void shouldInplaceEditItemTest() {
+		// given
+		String editedItemText = "Inplace edited FirstListItem";
+		WebElement itemEditText = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]"));
+		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[3]/input"));
+
+		// when
+		new Actions(browser).doubleClick(itemEditText).perform();
+		itemEditBox.clear();
+		itemEditBox.sendKeys(editedItemText);
+		itemEditBox.sendKeys("\n");
+
+		// then
+		itemEditText = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]"));
+		String itemNameAfterEdition = itemEditText.getText();
+		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
+	}
+	
+	@Test(dependsOnMethods = { "shouldInplaceEditItemTest" })
+	public void shouldDeleteItemTest() {
+		// given
+		int numberOfRowsBefore = browser.findElements(By.id("removeItemButton")).size();
+		WebElement removeButton = browser.findElement(By.id("removeItemButton"));
+
+		// when
+		removeButton.click();
+		new Actions(browser).pause(1000).perform();
+		WebElement confirmRemovalButton = browser.findElement(By.id("confirmItemRemovalButton"));
+		confirmRemovalButton.click();
+		new Actions(browser).pause(1000).perform();
+
+		// then
+		int numberOfRowsAfter = browser.findElements(By.id("removeItemButton")).size();
+		assertThat(numberOfRowsAfter).isEqualTo(numberOfRowsBefore - 1);
 	}
 
 	@AfterTest
-	public void deleteAllItems() {
+	public void cleanupAndShutdownBrowser() {
+		deleteAllItems();
+		browser.quit();
+	}
+	
+	private void deleteAllItems() {
 		while (browser.findElements(By.id("removeItemButton")).size() > 0) {
 			WebElement removeButton = browser.findElement(By.id("removeItemButton"));
 			removeButton.click();
@@ -113,10 +187,5 @@ public class IndexPageTest {
 			confirmRemovalButton.click();
 			new Actions(browser).pause(1000).perform();
 		}
-	}
-
-	@AfterTest
-	public void shutdownBrowser() {
-		browser.quit();
 	}
 }
