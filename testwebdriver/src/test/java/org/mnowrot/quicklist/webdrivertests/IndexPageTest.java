@@ -62,10 +62,45 @@ public class IndexPageTest {
 		addNewListItemButton.click();
 
 		// then
-		List<WebElement> newListItemCells = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr/td"));
+		List<WebElement> newListItemCells = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr[1]/td"));
 		assertThat(newListItemCells).isNotNull();
 		assertThat(newListItemCells).hasSize(4);
 		assertThat(newListItemCells.get(1).getText()).isEqualTo(itemName);
+	}
+	
+	@Test(dependsOnMethods = { "shouldAddListItemOnClickTest" })
+	public void shouldAddListItemOnEnterTest() {
+		// given
+		String itemName = "SecondListItem";
+		WebElement newListItemInput = browser.findElement(By.id("newListItemInput"));
+
+		// when
+		newListItemInput.sendKeys(itemName);
+		newListItemInput.sendKeys("\n");
+
+		// then
+		List<WebElement> newListItemCells = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr[2]/td"));
+		assertThat(newListItemCells).isNotNull();
+		assertThat(newListItemCells).hasSize(4);
+		assertThat(newListItemCells.get(1).getText()).isEqualTo(itemName);
+	}
+	
+	@Test(dependsOnMethods = { "shouldAddListItemOnEnterTest" })
+	public void shouldCancelItemEditionTest() {
+		// given
+		WebElement editItemButton = browser.findElements(By.id("editItemButton")).get(0);
+		WebElement cancelItemEditionButton = browser.findElements(By.id("cancelItemEditionButton")).get(0);
+		String itemNameBeforeEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]")).getText();
+		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[3]/input"));
+
+		// when
+		editItemButton.click();
+		itemEditBox.sendKeys("djjdkksksjsjksjsk");
+		cancelItemEditionButton.click();
+
+		// then
+		String itemNameAfterEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]")).getText();
+		assertThat(itemNameBeforeEdition).isEqualTo(itemNameAfterEdition);
 	}
 
 	@AfterTest

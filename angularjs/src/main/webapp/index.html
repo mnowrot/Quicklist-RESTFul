@@ -76,15 +76,15 @@
 					ng-keyup="saveEditedListItemOnEnter($event)" focus-id="inputListItemName">
 				</td>
 				<td>
-					<button type="button" class="btn btn-default btn-xs"
+					<button type="button" class="btn btn-default btn-xs" id="editItemButton"
 						ng-hide="isItemEdited(item)" ng-click="editItem(item)">
 						<span class="glyphicon glyphicon-pencil"></span>
 					</button>
-					<button type="button" class="btn btn-default btn-xs"
+					<button type="button" class="btn btn-default btn-xs" id="saveEditedItemButton"
 						ng-show="isItemEdited(item)" ng-click="saveEditedItem()">
 						<span class="glyphicon glyphicon-ok-circle"></span>
 					</button>
-					<button type="button" class="btn btn-default btn-xs"
+					<button type="button" class="btn btn-default btn-xs" id="cancelItemEditionButton"
 						ng-show="isItemEdited(item)" ng-click="finishItemEdition()">
 						<span class="glyphicon glyphicon-remove-circle"></span>
 					</button>
