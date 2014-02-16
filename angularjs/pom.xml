@@ -27,9 +27,9 @@
 		<plugins>
 			<!-- JBoss AS plugin to deploy war -->
 			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>${version.jboss.maven.plugin}</version>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
 				<configuration>
 					<skip>false</skip>
 				</configuration>
