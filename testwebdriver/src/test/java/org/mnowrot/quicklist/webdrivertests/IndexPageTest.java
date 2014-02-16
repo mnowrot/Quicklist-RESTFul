@@ -8,7 +8,8 @@ import static org.fest.assertions.Assertions.assertThat;
 import java.util.List;
 
 import org.mnowrot.quicklist.webdrivertests.config.BrowserProvider;
-import org.openqa.selenium.By;
+import org.mnowrot.quicklist.webdrivertests.config.IndexPageElementFinderProvider;
+import org.mnowrot.quicklist.webdrivertests.finders.IndexPageElementFinder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -24,12 +25,14 @@ import org.testng.annotations.Test;
 public class IndexPageTest {
 
 	private WebDriver browser;
+	
+	private IndexPageElementFinder finder;
 
 	@BeforeTest
-	@Parameters({ "url", "browser" })
-	public void prepareBrowserAndPage(String url, String browserName) {
+	@Parameters({ "url", "browser", "pageElementFinder" })
+	public void prepareBrowserAndPage(String url, String browserName, String pageElementFinderName) {
+		this.finder = IndexPageElementFinderProvider.provideIndexPageElementFinderByName(pageElementFinderName);
 		this.browser = BrowserProvider.provideBrowserByName(browserName);
-		browser.manage().deleteAllCookies();
 		browser.get(url);
 		deleteAllItems();
 	}
@@ -39,7 +42,7 @@ public class IndexPageTest {
 		// given
 
 		// when
-		int tableSize = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr")).size();
+		int tableSize = finder.getItemTableRows(browser).size();
 
 		// then
 		assertThat(tableSize).isEqualTo(1);
@@ -49,32 +52,33 @@ public class IndexPageTest {
 	public void shouldAddListItemOnClickTest() {
 		// given
 		String itemName = "FirstListItem";
-		WebElement newListItemInput = browser.findElement(By.id("newListItemInput"));
-		WebElement addNewListItemButton = browser.findElement(By.id("addNewListItemButton"));
+		WebElement newListItemInput = finder.getNewListItemInput(browser);
+		WebElement addNewListItemButton = finder.getAddNewListItemButton(browser);
 
 		// when
 		newListItemInput.sendKeys(itemName);
 		addNewListItemButton.click();
 
 		// then
-		List<WebElement> newListItemCells = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr[1]/td"));
+		List<WebElement> newListItemCells = finder.getItemTableFirstRowColumns(browser);
 		assertThat(newListItemCells).isNotNull();
 		assertThat(newListItemCells).hasSize(4);
 		assertThat(newListItemCells.get(1).getText()).isEqualTo(itemName);
 	}
+
 	
 	@Test(dependsOnMethods = { "shouldAddListItemOnClickTest" })
 	public void shouldAddListItemOnEnterTest() {
 		// given
 		String itemName = "SecondListItem";
-		WebElement newListItemInput = browser.findElement(By.id("newListItemInput"));
+		WebElement newListItemInput = finder.getNewListItemInput(browser);
 
 		// when
 		newListItemInput.sendKeys(itemName);
 		newListItemInput.sendKeys("\n");
 
 		// then
-		List<WebElement> newListItemCells = browser.findElement(By.id("listItemsTable")).findElements(By.xpath("tbody/tr[2]/td"));
+		List<WebElement> newListItemCells = finder.getItemTableSecondRowColumns(browser);
 		assertThat(newListItemCells).isNotNull();
 		assertThat(newListItemCells).hasSize(4);
 		assertThat(newListItemCells.get(1).getText()).isEqualTo(itemName);
@@ -83,28 +87,28 @@ public class IndexPageTest {
 	@Test(dependsOnMethods = { "shouldAddListItemOnEnterTest" })
 	public void shouldCancelItemEditionTest() {
 		// given
-		WebElement editItemButton = browser.findElements(By.id("editItemButton")).get(0);
-		WebElement cancelItemEditionButton = browser.findElements(By.id("cancelItemEditionButton")).get(0);
-		String itemNameBeforeEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]")).getText();
-		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[3]/input"));
+		WebElement editItemButton = finder.getFirstEditItemButton(browser);
+		WebElement cancelItemEditionButton = finder.getFirstCancelItemEditionButton(browser);
+		String itemNameBeforeEdition = finder.getFirstEditedItem(browser).getText();
+		WebElement itemEditInput = finder.getFirstItemEditInput(browser);
 
 		// when
 		editItemButton.click();
-		itemEditBox.sendKeys("djjdkksksjsjksjsk");
+		itemEditInput.sendKeys("djjdkksksjsjksjsk");
 		cancelItemEditionButton.click();
 
 		// then
-		String itemNameAfterEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]")).getText();
+		String itemNameAfterEdition = finder.getFirstEditedItem(browser).getText();
 		assertThat(itemNameAfterEdition).isEqualTo(itemNameBeforeEdition);
 	}
 	
 	@Test(dependsOnMethods = { "shouldCancelItemEditionTest" })
 	public void shouldEditItemOnClickTest() {
 		// given
-		WebElement editItemButton = browser.findElements(By.id("editItemButton")).get(0);
-		WebElement saveEditedItemButton = browser.findElements(By.id("saveEditedItemButton")).get(0);
+		WebElement editItemButton = finder.getFirstEditItemButton(browser);
+		WebElement saveEditedItemButton = finder.getFirstSaveEditedItemButton(browser);
 		String editedItemText = "Edited FirstListItem";
-		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[3]/input"));
+		WebElement itemEditBox = finder.getFirstItemEditInput(browser);
 
 		// when
 		editItemButton.click();
@@ -113,16 +117,16 @@ public class IndexPageTest {
 		saveEditedItemButton.click();
 
 		// then
-		String itemNameAfterEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]")).getText();
+		String itemNameAfterEdition = finder.getFirstEditedItem(browser).getText();
 		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
 	}
-	
+
 	@Test(dependsOnMethods = { "shouldEditItemOnClickTest" })
 	public void shouldEditItemOnEnterTest() {
 		// given
-		WebElement editItemButton = browser.findElements(By.id("editItemButton")).get(1);
+		WebElement editItemButton = finder.getSecondEditItemButton(browser);
 		String editedItemText = "Edited SecondListItem";
-		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[2]/td[3]/input"));
+		WebElement itemEditBox = finder.getSecondItemEditInput(browser);
 
 		// when
 		editItemButton.click();
@@ -131,7 +135,7 @@ public class IndexPageTest {
 		itemEditBox.sendKeys("\n");
 
 		// then
-		String itemNameAfterEdition = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[2]/td[2]")).getText();
+		String itemNameAfterEdition = finder.getSecondEditedItem(browser).getText();
 		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
 	}
 	
@@ -139,8 +143,8 @@ public class IndexPageTest {
 	public void shouldInplaceEditItemTest() {
 		// given
 		String editedItemText = "Inplace edited FirstListItem";
-		WebElement itemEditText = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]"));
-		WebElement itemEditBox = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[3]/input"));
+		WebElement itemEditText = finder.getFirstEditedItem(browser);
+		WebElement itemEditBox = finder.getFirstItemEditInput(browser);
 
 		// when
 		new Actions(browser).doubleClick(itemEditText).perform();
@@ -149,7 +153,7 @@ public class IndexPageTest {
 		itemEditBox.sendKeys("\n");
 
 		// then
-		itemEditText = browser.findElement(By.id("listItemsTable")).findElement(By.xpath("tbody/tr[1]/td[2]"));
+		itemEditText = finder.getFirstEditedItem(browser);
 		String itemNameAfterEdition = itemEditText.getText();
 		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
 	}
@@ -157,18 +161,18 @@ public class IndexPageTest {
 	@Test(dependsOnMethods = { "shouldInplaceEditItemTest" })
 	public void shouldDeleteItemTest() {
 		// given
-		int numberOfRowsBefore = browser.findElements(By.id("removeItemButton")).size();
-		WebElement removeButton = browser.findElement(By.id("removeItemButton"));
+		int numberOfRowsBefore = finder.getItemTableRows(browser).size();
+		WebElement removeButton = finder.getFirstRemoveItemButton(browser);
 
 		// when
 		removeButton.click();
 		new Actions(browser).pause(1000).perform();
-		WebElement confirmRemovalButton = browser.findElement(By.id("confirmItemRemovalButton"));
+		WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton(browser);
 		confirmRemovalButton.click();
 		new Actions(browser).pause(1000).perform();
 
 		// then
-		int numberOfRowsAfter = browser.findElements(By.id("removeItemButton")).size();
+		int numberOfRowsAfter = finder.getItemTableRows(browser).size();
 		assertThat(numberOfRowsAfter).isEqualTo(numberOfRowsBefore - 1);
 	}
 
@@ -179,11 +183,11 @@ public class IndexPageTest {
 	}
 	
 	private void deleteAllItems() {
-		while (browser.findElements(By.id("removeItemButton")).size() > 0) {
-			WebElement removeButton = browser.findElement(By.id("removeItemButton"));
+		while (finder.getRemoveItemButtons(browser).size() > 0) {
+			WebElement removeButton = finder.getFirstRemoveItemButton(browser);
 			removeButton.click();
 			new Actions(browser).pause(1000).perform();
-			WebElement confirmRemovalButton = browser.findElement(By.id("confirmItemRemovalButton"));
+			WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton(browser);
 			confirmRemovalButton.click();
 			new Actions(browser).pause(1000).perform();
 		}

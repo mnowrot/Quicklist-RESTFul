@@ -2,6 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="AngularJS">
 	<parameter name="url" value="http://localhost:8080/quicklist-angularjs"/>
+	<parameter name="pageElementFinder" value="default"/>
 	<test name="Firefox">
 		<parameter name="browser" value="firefox"/>
 		<classes>
