@@ -46,22 +46,22 @@
 		<version.war.plugin>2.4</version.war.plugin>
 
 		<!-- maven-compiler-plugin -->
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
 
 		<!-- Define the version of the JBoss BOMs we want to import to specify 
 			tested stacks. -->
 		<version.jboss.bom>1.0.7.Final</version.jboss.bom>
-		<version.surefire.plugin>2.16</version.surefire.plugin>
+		<version.surefire.plugin>2.17</version.surefire.plugin>
 		<version.fest.assert>1.4</version.fest.assert>
 
 		<!-- JBoss deployer plugin version -->
-		<version.wildfly.maven.plugin>1.0.0.Final</version.wildfly.maven.plugin>
+		<version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
 
 		<!-- Selenium version -->
-		<version.selenium.java>2.39.0</version.selenium.java>
+		<version.selenium.java>2.41.0</version.selenium.java>
 		<!-- TestNG version -->
-		<version.testng>6.8.7</version.testng>
+		<version.testng>6.8.8</version.testng>
 	</properties>
 
 	<pluginRepositories>
