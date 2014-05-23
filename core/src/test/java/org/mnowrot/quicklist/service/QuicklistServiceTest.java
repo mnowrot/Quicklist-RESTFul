@@ -11,23 +11,21 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mnowrot.quicklist.model.ListItem;
+import org.testng.annotations.Test;
 
 /**
- * 
- * 
+ *
+ *
  * @author PLMANOW4
- * 
+ *
  */
-@RunWith(Arquillian.class)
-public class QuicklistServiceTest {
+public class QuicklistServiceTest extends Arquillian {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -41,16 +39,12 @@ public class QuicklistServiceTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		return ShrinkWrap
-				.create(WebArchive.class,
-						QuicklistServiceTest.class.getSimpleName() + ".war")
+				.create(WebArchive.class, QuicklistServiceTest.class.getSimpleName() + ".war")
 				.addClass(QuicklistService.class)
 				.addClass(ListItem.class)
 				.addAsResource("META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-				.addAsLibraries(
-						Maven.resolver()
-								.resolve("org.easytesting:fest-assert:1.4")
-								.withTransitivity().asFile());
+				.addAsLibraries(Maven.resolver().resolve("org.easytesting:fest-assert:1.4").withTransitivity().asFile());
 	}
 
 	@Test
@@ -59,7 +53,7 @@ public class QuicklistServiceTest {
 		utx.begin();
 		em.joinTransaction();
 
-		//when
+		// when
 		quicklistService.addItem("TestListItemName1");
 		quicklistService.addItem("TestListItemName2");
 		final List<ListItem> allItems = quicklistService.getAllItems();
@@ -71,16 +65,16 @@ public class QuicklistServiceTest {
 		utx.rollback();
 
 	}
-	
+
 	@Test
 	public void listDeletionTest() throws Exception {
 		// given
 		utx.begin();
 		em.joinTransaction();
-		ListItem toDelete = quicklistService.addItem("TestListItemName1");
+		final ListItem toDelete = quicklistService.addItem("TestListItemName1");
 		quicklistService.addItem("TestListItemName2");
 
-		//when
+		// when
 		quicklistService.removeItem(toDelete.getId());
 		final List<ListItem> allItems = quicklistService.getAllItems();
 
@@ -90,16 +84,16 @@ public class QuicklistServiceTest {
 		assertThat(allItems).hasSize(1);
 		utx.rollback();
 	}
-	
+
 	@Test
 	public void listEditionTest() throws Exception {
 		// given
 		utx.begin();
 		em.joinTransaction();
-		ListItem toEdit = quicklistService.addItem("TestListItemName1");
+		final ListItem toEdit = quicklistService.addItem("TestListItemName1");
 		quicklistService.addItem("TestListItemName2");
 
-		//when
+		// when
 		quicklistService.editItemName(toEdit.getId(), "TestListItemName3");
 		final List<ListItem> allItems = quicklistService.getAllItems();
 		final ListItem edited = quicklistService.getItemById(toEdit.getId());
