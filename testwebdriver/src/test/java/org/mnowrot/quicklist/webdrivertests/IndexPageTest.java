@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.mnowrot.quicklist.webdrivertests.config.BrowserProvider;
 import org.mnowrot.quicklist.webdrivertests.config.IndexPageElementFinderProvider;
 import org.mnowrot.quicklist.webdrivertests.finders.IndexPageElementFinder;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -38,8 +39,9 @@ public class IndexPageTest {
 	public void prepareBrowserAndPage(String url, String browserName, String pageElementFinderName) {
 		finder = IndexPageElementFinderProvider.provideIndexPageElementFinderByName(pageElementFinderName);
 		browser = BrowserProvider.provideBrowserByName(browserName);
+		wait = new FluentWait<WebDriver>(browser).withTimeout(30, TimeUnit.SECONDS).pollingEvery(1, TimeUnit.SECONDS)
+				.ignoring(StaleElementReferenceException.class);
 		browser.get(url);
-		wait = new FluentWait<WebDriver>(browser).withTimeout(30, TimeUnit.SECONDS).pollingEvery(1, TimeUnit.SECONDS);
 		deleteAllItems();
 	}
 
@@ -64,6 +66,10 @@ public class IndexPageTest {
 		// when
 		newListItemInput.sendKeys(itemName);
 		addNewListItemButton.click();
+		wait.until(driver -> {
+			final List<WebElement> newListItemCells = finder.getItemTableFirstRowColumns(driver);
+			return newListItemCells != null && newListItemCells.size() == 4;
+		});
 
 		// then
 		final List<WebElement> newListItemCells = finder.getItemTableFirstRowColumns(browser);
@@ -81,6 +87,10 @@ public class IndexPageTest {
 		// when
 		newListItemInput.sendKeys(itemName);
 		newListItemInput.sendKeys("\n");
+		wait.until(driver -> {
+			final List<WebElement> newListItemCells = finder.getItemTableSecondRowColumns(driver);
+			return newListItemCells != null && newListItemCells.size() == 4;
+		});
 
 		// then
 		final List<WebElement> newListItemCells = finder.getItemTableSecondRowColumns(browser);
@@ -99,6 +109,7 @@ public class IndexPageTest {
 
 		// when
 		editItemButton.click();
+		wait.until(driver -> itemEditInput.isDisplayed());
 		itemEditInput.sendKeys("djjdkksksjsjksjsk");
 		cancelItemEditionButton.click();
 
@@ -120,6 +131,12 @@ public class IndexPageTest {
 		itemEditBox.clear();
 		itemEditBox.sendKeys(editedItemText);
 		saveEditedItemButton.click();
+		// wait until the browser updates itself after click and StaleElementReferenceException is no longer thrown on
+		// accessing the element to check
+		wait.until(driver -> {
+			finder.getFirstEditedItem(browser).getText();
+			return true;
+		});
 
 		// then
 		final String itemNameAfterEdition = finder.getFirstEditedItem(browser).getText();
@@ -138,6 +155,12 @@ public class IndexPageTest {
 		itemEditBox.clear();
 		itemEditBox.sendKeys(editedItemText);
 		itemEditBox.sendKeys("\n");
+		// wait until the browser updates itself after pressing enter and StaleElementReferenceException is no longer
+		// thrown on accessing the element to check
+		wait.until(driver -> {
+			finder.getSecondEditedItem(browser).getText();
+			return true;
+		});
 
 		// then
 		final String itemNameAfterEdition = finder.getSecondEditedItem(browser).getText();
