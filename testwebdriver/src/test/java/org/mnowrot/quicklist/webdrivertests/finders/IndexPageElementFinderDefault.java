@@ -95,9 +95,4 @@ public class IndexPageElementFinderDefault implements IndexPageElementFinder {
 		return browser.findElements(By.id("removeItemButton"));
 	}
 
-	@Override
-	public WebElement getConfirmItemRemovalDialog(WebDriver browser) {
-		return browser.findElement(By.id("removeYesNoModal"));
-	}
-
 }

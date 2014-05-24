@@ -171,11 +171,10 @@ public class IndexPageTest {
 
 		// when
 		removeButton.click();
-		final WebElement confirmRemovalDialog = finder.getConfirmItemRemovalDialog(browser);
 		final WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton(browser);
 		wait.until(driver -> confirmRemovalButton.isDisplayed());
 		confirmRemovalButton.click();
-		wait.until(driver -> !confirmRemovalDialog.isDisplayed());
+		wait.until(driver -> !confirmRemovalButton.isDisplayed());
 
 		// then
 		final List<WebElement> itemTableRows = finder.getItemTableRows(browser);
@@ -189,16 +188,19 @@ public class IndexPageTest {
 		browser.quit();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void deleteAllItems() {
 		while (finder.getRemoveItemButtons(browser).size() > 0) {
+			// need to resort to a deprecated method to work around a weird timing bug that happens only in Firefox
+			// deleting an item freezes without this one second pause
+			new Actions(browser).pause(1000).perform();
 			final WebElement removeButton = finder.getFirstRemoveItemButton(browser);
 			removeButton.click();
 
-			final WebElement confirmRemovalDialog = finder.getConfirmItemRemovalDialog(browser);
 			final WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton(browser);
 			wait.until(driver -> confirmRemovalButton.isDisplayed());
 			confirmRemovalButton.click();
-			wait.until(driver -> !confirmRemovalDialog.isDisplayed());
+			wait.until(driver -> !confirmRemovalButton.isDisplayed());
 		}
 	}
 }

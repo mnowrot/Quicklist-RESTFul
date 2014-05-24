@@ -39,6 +39,4 @@ public interface IndexPageElementFinder {
 
 	public List<WebElement> getRemoveItemButtons(WebDriver browser);
 
-	public WebElement getConfirmItemRemovalDialog(WebDriver browser);
-
 }
