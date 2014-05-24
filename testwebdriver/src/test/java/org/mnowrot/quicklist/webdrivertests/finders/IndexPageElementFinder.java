@@ -2,41 +2,40 @@ package org.mnowrot.quicklist.webdrivertests.finders;
 
 import java.util.List;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public interface IndexPageElementFinder {
 
-	public List<WebElement> getItemTableRows(WebDriver browser);
+	public List<WebElement> getItemTableRows();
 
-	public WebElement getNewListItemInput(WebDriver browser);
+	public WebElement getNewListItemInput();
 
-	public WebElement getAddNewListItemButton(WebDriver browser);
+	public WebElement getAddNewListItemButton();
 
-	public List<WebElement> getItemTableFirstRowColumns(WebDriver browser);
+	public List<WebElement> getItemTableFirstRowColumns();
 
-	public List<WebElement> getItemTableSecondRowColumns(WebDriver browser);
+	public List<WebElement> getItemTableSecondRowColumns();
 
-	public WebElement getFirstEditItemButton(WebDriver browser);
+	public WebElement getFirstEditItemButton();
 
-	public WebElement getFirstCancelItemEditionButton(WebDriver browser);
+	public WebElement getFirstCancelItemEditionButton();
 
-	public WebElement getFirstEditedItem(WebDriver browser);
+	public WebElement getFirstEditedItem();
 
-	public WebElement getFirstItemEditInput(WebDriver browser);
+	public WebElement getFirstItemEditInput();
 
-	public WebElement getFirstSaveEditedItemButton(WebDriver browser);
+	public WebElement getFirstSaveEditedItemButton();
 
-	public WebElement getSecondEditedItem(WebDriver browser);
+	public WebElement getSecondEditedItem();
 
-	public WebElement getSecondItemEditInput(WebDriver browser);
+	public WebElement getSecondItemEditInput();
 
-	public WebElement getSecondEditItemButton(WebDriver browser);
+	public WebElement getSecondEditItemButton();
 
-	public WebElement getFirstRemoveItemButton(WebDriver browser);
+	public WebElement getFirstRemoveItemButton();
 
-	public WebElement getConfirmItemRemovalButton(WebDriver browser);
+	public WebElement getConfirmItemRemovalButton();
 
-	public List<WebElement> getRemoveItemButtons(WebDriver browser);
+	public List<WebElement> getRemoveItemButtons();
 
 }

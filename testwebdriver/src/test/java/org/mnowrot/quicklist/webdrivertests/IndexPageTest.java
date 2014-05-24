@@ -37,8 +37,8 @@ public class IndexPageTest {
 	@BeforeTest
 	@Parameters({ "url", "browser", "pageElementFinder" })
 	public void prepareBrowserAndPage(String url, String browserName, String pageElementFinderName) {
-		finder = IndexPageElementFinderProvider.provideIndexPageElementFinderByName(pageElementFinderName);
 		browser = BrowserProvider.provideBrowserByName(browserName);
+		finder = IndexPageElementFinderProvider.provideIndexPageElementFinderByName(pageElementFinderName, browser);
 		wait = new FluentWait<WebDriver>(browser).withTimeout(30, TimeUnit.SECONDS).pollingEvery(1, TimeUnit.SECONDS)
 				.ignoring(StaleElementReferenceException.class);
 		browser.get(url);
@@ -50,7 +50,7 @@ public class IndexPageTest {
 		// given
 
 		// when
-		final int tableSize = finder.getItemTableRows(browser).size();
+		final int tableSize = finder.getItemTableRows().size();
 
 		// then
 		assertThat(tableSize).isEqualTo(1);
@@ -60,19 +60,19 @@ public class IndexPageTest {
 	public void shouldAddListItemOnClickTest() {
 		// given
 		final String itemName = "FirstListItem";
-		final WebElement newListItemInput = finder.getNewListItemInput(browser);
-		final WebElement addNewListItemButton = finder.getAddNewListItemButton(browser);
+		final WebElement newListItemInput = finder.getNewListItemInput();
+		final WebElement addNewListItemButton = finder.getAddNewListItemButton();
 
 		// when
 		newListItemInput.sendKeys(itemName);
 		addNewListItemButton.click();
 		wait.until(driver -> {
-			final List<WebElement> newListItemCells = finder.getItemTableFirstRowColumns(driver);
+			final List<WebElement> newListItemCells = finder.getItemTableFirstRowColumns();
 			return newListItemCells != null && newListItemCells.size() == 4;
 		});
 
 		// then
-		final List<WebElement> newListItemCells = finder.getItemTableFirstRowColumns(browser);
+		final List<WebElement> newListItemCells = finder.getItemTableFirstRowColumns();
 		assertThat(newListItemCells).isNotNull();
 		assertThat(newListItemCells).hasSize(4);
 		assertThat(newListItemCells.get(1).getText()).isEqualTo(itemName);
@@ -82,18 +82,19 @@ public class IndexPageTest {
 	public void shouldAddListItemOnEnterTest() {
 		// given
 		final String itemName = "SecondListItem";
-		final WebElement newListItemInput = finder.getNewListItemInput(browser);
+		final WebElement newListItemInput = finder.getNewListItemInput();
 
 		// when
 		newListItemInput.sendKeys(itemName);
 		newListItemInput.sendKeys("\n");
+		// wait until the browser updates itself after pressing enter
 		wait.until(driver -> {
-			final List<WebElement> newListItemCells = finder.getItemTableSecondRowColumns(driver);
+			final List<WebElement> newListItemCells = finder.getItemTableSecondRowColumns();
 			return newListItemCells != null && newListItemCells.size() == 4;
 		});
 
 		// then
-		final List<WebElement> newListItemCells = finder.getItemTableSecondRowColumns(browser);
+		final List<WebElement> newListItemCells = finder.getItemTableSecondRowColumns();
 		assertThat(newListItemCells).isNotNull();
 		assertThat(newListItemCells).hasSize(4);
 		assertThat(newListItemCells.get(1).getText()).isEqualTo(itemName);
@@ -102,10 +103,10 @@ public class IndexPageTest {
 	@Test(dependsOnMethods = { "shouldAddListItemOnEnterTest" })
 	public void shouldCancelItemEditionTest() {
 		// given
-		final WebElement editItemButton = finder.getFirstEditItemButton(browser);
-		final WebElement cancelItemEditionButton = finder.getFirstCancelItemEditionButton(browser);
-		final String itemNameBeforeEdition = finder.getFirstEditedItem(browser).getText();
-		final WebElement itemEditInput = finder.getFirstItemEditInput(browser);
+		final WebElement editItemButton = finder.getFirstEditItemButton();
+		final WebElement cancelItemEditionButton = finder.getFirstCancelItemEditionButton();
+		final String itemNameBeforeEdition = finder.getFirstEditedItem().getText();
+		final WebElement itemEditInput = finder.getFirstItemEditInput();
 
 		// when
 		editItemButton.click();
@@ -114,17 +115,17 @@ public class IndexPageTest {
 		cancelItemEditionButton.click();
 
 		// then
-		final String itemNameAfterEdition = finder.getFirstEditedItem(browser).getText();
+		final String itemNameAfterEdition = finder.getFirstEditedItem().getText();
 		assertThat(itemNameAfterEdition).isEqualTo(itemNameBeforeEdition);
 	}
 
 	@Test(dependsOnMethods = { "shouldCancelItemEditionTest" })
 	public void shouldEditItemOnClickTest() {
 		// given
-		final WebElement editItemButton = finder.getFirstEditItemButton(browser);
-		final WebElement saveEditedItemButton = finder.getFirstSaveEditedItemButton(browser);
+		final WebElement editItemButton = finder.getFirstEditItemButton();
+		final WebElement saveEditedItemButton = finder.getFirstSaveEditedItemButton();
 		final String editedItemText = "Edited FirstListItem";
-		final WebElement itemEditBox = finder.getFirstItemEditInput(browser);
+		final WebElement itemEditBox = finder.getFirstItemEditInput();
 
 		// when
 		editItemButton.click();
@@ -134,21 +135,21 @@ public class IndexPageTest {
 		// wait until the browser updates itself after click and StaleElementReferenceException is no longer thrown on
 		// accessing the element to check
 		wait.until(driver -> {
-			finder.getFirstEditedItem(browser).getText();
+			finder.getFirstEditedItem().getText();
 			return true;
 		});
 
 		// then
-		final String itemNameAfterEdition = finder.getFirstEditedItem(browser).getText();
+		final String itemNameAfterEdition = finder.getFirstEditedItem().getText();
 		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
 	}
 
 	@Test(dependsOnMethods = { "shouldEditItemOnClickTest" })
 	public void shouldEditItemOnEnterTest() {
 		// given
-		final WebElement editItemButton = finder.getSecondEditItemButton(browser);
+		final WebElement editItemButton = finder.getSecondEditItemButton();
 		final String editedItemText = "Edited SecondListItem";
-		final WebElement itemEditBox = finder.getSecondItemEditInput(browser);
+		final WebElement itemEditBox = finder.getSecondItemEditInput();
 
 		// when
 		editItemButton.click();
@@ -158,12 +159,12 @@ public class IndexPageTest {
 		// wait until the browser updates itself after pressing enter and StaleElementReferenceException is no longer
 		// thrown on accessing the element to check
 		wait.until(driver -> {
-			finder.getSecondEditedItem(browser).getText();
+			finder.getSecondEditedItem().getText();
 			return true;
 		});
 
 		// then
-		final String itemNameAfterEdition = finder.getSecondEditedItem(browser).getText();
+		final String itemNameAfterEdition = finder.getSecondEditedItem().getText();
 		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
 	}
 
@@ -171,17 +172,24 @@ public class IndexPageTest {
 	public void shouldInplaceEditItemTest() {
 		// given
 		final String editedItemText = "Inplace edited FirstListItem";
-		WebElement itemEditText = finder.getFirstEditedItem(browser);
-		final WebElement itemEditBox = finder.getFirstItemEditInput(browser);
+		WebElement itemEditText = finder.getFirstEditedItem();
+		final WebElement itemEditBox = finder.getFirstItemEditInput();
 
 		// when
 		new Actions(browser).doubleClick(itemEditText).perform();
 		itemEditBox.clear();
 		itemEditBox.sendKeys(editedItemText);
 		itemEditBox.sendKeys("\n");
+		// wait until the browser updates itself after pressing enter and StaleElementReferenceException is no longer
+		// thrown on accessing the element to check
+		// also on IE sometimes the edited message arrives partially - wait until it's complete
+		wait.until(driver -> {
+			final String text = finder.getFirstEditedItem().getText();
+			return editedItemText.equals(text);
+		});
 
 		// then
-		itemEditText = finder.getFirstEditedItem(browser);
+		itemEditText = finder.getFirstEditedItem();
 		final String itemNameAfterEdition = itemEditText.getText();
 		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
 	}
@@ -189,18 +197,18 @@ public class IndexPageTest {
 	@Test(dependsOnMethods = { "shouldInplaceEditItemTest" })
 	public void shouldDeleteItemTest() {
 		// given
-		final int numberOfRowsBefore = finder.getItemTableRows(browser).size();
-		final WebElement removeButton = finder.getFirstRemoveItemButton(browser);
+		final int numberOfRowsBefore = finder.getItemTableRows().size();
+		final WebElement removeButton = finder.getFirstRemoveItemButton();
 
 		// when
 		removeButton.click();
-		final WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton(browser);
+		final WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton();
 		wait.until(driver -> confirmRemovalButton.isDisplayed());
 		confirmRemovalButton.click();
 		wait.until(driver -> !confirmRemovalButton.isDisplayed());
 
 		// then
-		final List<WebElement> itemTableRows = finder.getItemTableRows(browser);
+		final List<WebElement> itemTableRows = finder.getItemTableRows();
 		final int numberOfRowsAfter = itemTableRows.size();
 		assertThat(numberOfRowsAfter).isEqualTo(numberOfRowsBefore - 1);
 	}
@@ -213,14 +221,14 @@ public class IndexPageTest {
 
 	@SuppressWarnings("deprecation")
 	private void deleteAllItems() {
-		while (finder.getRemoveItemButtons(browser).size() > 0) {
+		while (finder.getRemoveItemButtons().size() > 0) {
 			// need to resort to a deprecated method to work around a weird timing bug that happens only in Firefox
 			// deleting an item freezes without this one second pause
 			new Actions(browser).pause(1000).perform();
-			final WebElement removeButton = finder.getFirstRemoveItemButton(browser);
+			final WebElement removeButton = finder.getFirstRemoveItemButton();
 			removeButton.click();
 
-			final WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton(browser);
+			final WebElement confirmRemovalButton = finder.getConfirmItemRemovalButton();
 			wait.until(driver -> confirmRemovalButton.isDisplayed());
 			confirmRemovalButton.click();
 			wait.until(driver -> !confirmRemovalButton.isDisplayed());
