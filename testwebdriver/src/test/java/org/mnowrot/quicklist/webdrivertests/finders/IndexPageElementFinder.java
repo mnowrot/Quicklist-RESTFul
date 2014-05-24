@@ -13,11 +13,9 @@ public interface IndexPageElementFinder {
 
 	public WebElement getAddNewListItemButton(WebDriver browser);
 
-	public List<WebElement> getItemTableFirstRowColumns(
-			WebDriver browser);
+	public List<WebElement> getItemTableFirstRowColumns(WebDriver browser);
 
-	public List<WebElement> getItemTableSecondRowColumns(
-			WebDriver browser);
+	public List<WebElement> getItemTableSecondRowColumns(WebDriver browser);
 
 	public WebElement getFirstEditItemButton(WebDriver browser);
 
@@ -40,5 +38,7 @@ public interface IndexPageElementFinder {
 	public WebElement getConfirmItemRemovalButton(WebDriver browser);
 
 	public List<WebElement> getRemoveItemButtons(WebDriver browser);
+
+	public WebElement getConfirmItemRemovalDialog(WebDriver browser);
 
 }
