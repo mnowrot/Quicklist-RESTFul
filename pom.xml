@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-	http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0  http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.mnowrot.quicklist</groupId>
@@ -37,7 +37,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<!-- Core Maven plugins versions -->
 		<version.compiler.plugin>3.1</version.compiler.plugin>
 		<version.war.plugin>2.4</version.war.plugin>
@@ -46,24 +46,30 @@
 		<!-- JAVA version -->
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
-		
+
 		<!-- JEE version -->
 		<version.javaee.api>7.0</version.javaee.api>
 
 		<!-- Wildfly version -->
 		<version.wildfly>8.0.0.Final</version.wildfly>
-		
+
 		<!-- WildFly deployer plugin version -->
 		<version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
-		
+
 		<!-- Arquillian BOM version -->
 		<version.arquillian.bom>1.1.4.Final</version.arquillian.bom>
-		
+
 		<!-- TestNG version -->
 		<version.testng>6.8.8</version.testng>
-		
+
 		<!-- Fest Assert version -->
 		<version.fest.assert>1.4</version.fest.assert>
+
+		<!-- GWT version -->
+		<version.gwt>2.6.1</version.gwt>
+
+		<!-- Validation API -->
+		<version.javax.validation>1.0.0.GA</version.javax.validation>
 
 		<!-- Selenium version -->
 		<version.selenium.java>2.41.0</version.selenium.java>
@@ -129,6 +135,7 @@
 	<modules>
 		<module>core</module>
 		<module>angularjs</module>
+		<module>smartgwt</module>
 	</modules>
 
 	<profiles>
