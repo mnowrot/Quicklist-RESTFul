@@ -1,4 +1,4 @@
-package org.mnowrot.quicklist.client;
+package org.mnowrot.quicklist.smartgwt.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

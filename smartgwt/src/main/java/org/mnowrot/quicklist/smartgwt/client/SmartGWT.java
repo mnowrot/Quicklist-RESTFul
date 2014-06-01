@@ -1,6 +1,6 @@
-package org.mnowrot.quicklist.client;
+package org.mnowrot.quicklist.smartgwt.client;
 
-import org.mnowrot.quicklist.shared.FieldVerifier;
+import org.mnowrot.quicklist.smartgwt.shared.FieldVerifier;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -83,12 +83,12 @@ public class SmartGWT implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-					dialogBox.hide();
-					sendButton.setEnabled(true);
-					sendButton.setFocus(true);
-				
+				dialogBox.hide();
+				sendButton.setEnabled(true);
+				sendButton.setFocus(true);
+
 			}
-			
+
 		});
 
 		// Create a handler for the sendButton and nameField

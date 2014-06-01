@@ -1,4 +1,4 @@
-package org.mnowrot.quicklist.shared;
+package org.mnowrot.quicklist.smartgwt.shared;
 
 /**
  * <p>

@@ -1,7 +1,7 @@
-package org.mnowrot.quicklist.server;
+package org.mnowrot.quicklist.smartgwt.server;
 
-import org.mnowrot.quicklist.client.GreetingService;
-import org.mnowrot.quicklist.shared.FieldVerifier;
+import org.mnowrot.quicklist.smartgwt.client.GreetingService;
+import org.mnowrot.quicklist.smartgwt.shared.FieldVerifier;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

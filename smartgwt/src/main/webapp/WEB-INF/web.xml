@@ -8,7 +8,7 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>org.mnowrot.quicklist.server.GreetingServiceImpl</servlet-class>
+		<servlet-class>org.mnowrot.quicklist.smartgwt.server.GreetingServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

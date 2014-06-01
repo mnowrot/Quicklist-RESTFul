@@ -84,7 +84,7 @@
 					<sourceLevel>auto</sourceLevel>
 					<runTarget>smartgwt.html</runTarget>
 					<hostedWebapp>${webapp.directory}</hostedWebapp>
-					<i18nMessagesBundle>org.mnowrot.quicklist.client.Messages</i18nMessagesBundle>
+					<i18nMessagesBundle>org.mnowrot.quicklist.smartgwt.client.Messages</i18nMessagesBundle>
 				</configuration>
 			</plugin>
 
