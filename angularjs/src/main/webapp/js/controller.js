@@ -77,6 +77,7 @@ quicklistApp.controller('ListManager', function($scope, $http, sendFocus) {
 	$scope.saveEditedListItemOnEnter = function($event) {
 		if($event.keyCode === 13) {
 			$scope.saveEditedItem();
+			sendFocus('editItemButton')
 		}
 	};
 	
