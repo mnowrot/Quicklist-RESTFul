@@ -129,6 +129,7 @@ public class IndexPageTest {
 
 		// when
 		editItemButton.click();
+		wait.until(driver -> itemEditBox.isDisplayed());
 		itemEditBox.clear();
 		itemEditBox.sendKeys(editedItemText);
 		saveEditedItemButton.click();
@@ -153,6 +154,7 @@ public class IndexPageTest {
 
 		// when
 		editItemButton.click();
+		wait.until(driver -> itemEditBox.isDisplayed());
 		itemEditBox.clear();
 		itemEditBox.sendKeys(editedItemText);
 		itemEditBox.sendKeys("\n");
@@ -168,6 +170,10 @@ public class IndexPageTest {
 		assertThat(itemNameAfterEdition).isEqualTo(editedItemText);
 	}
 
+	/**
+	 * This test fails in IE11 - Actions.doubleClick does not work there
+	 * Update the IEDriver when available and re-test.
+	 */
 	@Test(dependsOnMethods = { "shouldEditItemOnEnterTest" })
 	public void shouldInplaceEditItemTest() {
 		// given
@@ -177,6 +183,7 @@ public class IndexPageTest {
 
 		// when
 		new Actions(browser).doubleClick(itemEditText).perform();
+		wait.until(driver -> itemEditBox.isDisplayed());
 		itemEditBox.clear();
 		itemEditBox.sendKeys(editedItemText);
 		itemEditBox.sendKeys("\n");
