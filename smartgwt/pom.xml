@@ -48,6 +48,26 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- 
+		Before attempting buiding or running this module download and install SmartGWT by:
+    		1) Editing the settings.xml file (usually found in ~/.m2 directory) and adding
+    		   <pluginGroup>com.isomorphic</pluginGroup> to <pluginGroups> element
+    		2) Issuing the following command:
+   			   mvn isc:install -Dproduct=SMARTGWT -Dlicense=LGPL -DbuildNumber=5.0p -DbuildDate=2014-11-21
+   			   The buildDate parameter is important as it gets appended to the SmartGWT library version number.
+		-->
+		<dependency>
+			<groupId>com.isomorphic.smartgwt.lgpl</groupId>
+			<artifactId>smartgwt-lgpl</artifactId>
+			<version>${smartgwt.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.isomorphic.smartgwt.lgpl</groupId>
+			<artifactId>smartgwt-skins</artifactId>
+			<version>${smartgwt.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -64,7 +84,7 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-			
+
 			<!-- GWT Maven Plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -79,7 +99,8 @@
 						</goals>
 					</execution>
 				</executions>
-				<!-- Plugin configuration. There are many available options, see gwt-maven-plugin documentation at codehaus.org -->
+				<!-- Plugin configuration. There are many available options, see gwt-maven-plugin 
+					documentation at codehaus.org -->
 				<configuration>
 					<sourceLevel>auto</sourceLevel>
 					<runTarget>smartgwt.html</runTarget>

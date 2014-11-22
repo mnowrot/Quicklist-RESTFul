@@ -68,6 +68,9 @@
 		<!-- GWT version -->
 		<version.gwt>2.6.1</version.gwt>
 
+		<!-- SmartGWT version -->
+		<smartgwt.version>5.0-p20141121</smartgwt.version>
+
 		<!-- Validation API -->
 		<version.javax.validation>1.0.0.GA</version.javax.validation>
 
