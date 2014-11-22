@@ -3,8 +3,6 @@
  */
 package org.mnowrot.quicklist.smartgwt.client;
 
-import org.mnowrot.quicklist.smartgwt.client.QuicklistView.QuicklistViewListener;
-
 import com.google.gwt.user.client.ui.Widget;
 
 /**
