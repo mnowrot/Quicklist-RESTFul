@@ -48,14 +48,12 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- 
-		Before attempting buiding or running this module download and install SmartGWT by:
-    		1) Editing the settings.xml file (usually found in ~/.m2 directory) and adding
-    		   <pluginGroup>com.isomorphic</pluginGroup> to <pluginGroups> element
-    		2) Issuing the following command:
-   			   mvn isc:install -Dproduct=SMARTGWT -Dlicense=LGPL -DbuildNumber=5.0p -DbuildDate=2014-11-21
-   			   The buildDate parameter is important as it gets appended to the SmartGWT library version number.
-		-->
+		<!-- Before attempting buiding or running this module download and install 
+			SmartGWT by: 1) Editing the settings.xml file (usually found in ~/.m2 directory) 
+			and adding <pluginGroup>com.isomorphic</pluginGroup> to <pluginGroups> element 
+			2) Issuing the following command: mvn isc:install -Dproduct=SMARTGWT -Dlicense=LGPL 
+			-DbuildNumber=5.0p -DbuildDate=2014-11-21 The buildDate parameter is important 
+			as it gets appended to the SmartGWT library version number. -->
 		<dependency>
 			<groupId>com.isomorphic.smartgwt.lgpl</groupId>
 			<artifactId>smartgwt-lgpl</artifactId>
@@ -75,6 +73,16 @@
 		<outputDirectory>${webapp.directory}/WEB-INF/classes</outputDirectory>
 
 		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
 			<!-- GWT Maven Plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -93,7 +101,7 @@
 					documentation at codehaus.org -->
 				<configuration>
 					<sourceLevel>auto</sourceLevel>
-					<runTarget>smartgwt.html</runTarget>
+					<runTarget>quicklist.html</runTarget>
 					<hostedWebapp>${webapp.directory}</hostedWebapp>
 					<i18nMessagesBundle>org.mnowrot.quicklist.smartgwt.client.Messages</i18nMessagesBundle>
 				</configuration>

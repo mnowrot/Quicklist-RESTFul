@@ -11,7 +11,7 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
 	<!-- Other module inherits -->
-	<inherits name="com.smartgwt.SmartGwtNoScript" />
+	<inherits name="com.smartgwt.SmartGwt" />
 	<inherits name="com.smartclient.theme.enterprise.EnterpriseResources" />
 	<inherits name="com.smartgwt.tools.SmartGwtTools" />
 
@@ -20,6 +20,4 @@
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
-	
-	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
 </module>

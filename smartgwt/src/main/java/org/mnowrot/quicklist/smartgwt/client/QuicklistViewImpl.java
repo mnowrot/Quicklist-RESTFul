@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
-import com.smartgwt.client.widgets.BaseWidget;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -28,9 +27,9 @@ public class QuicklistViewImpl implements QuicklistView {
 	public QuicklistViewImpl() {
 		super();
 		
-		ListGridField id = new ListGridField("ID#");
-		ListGridField name = new ListGridField("Name");
-		ListGridField options = new ListGridField("Options");
+		ListGridField id = new ListGridField("id", "ID#");
+		ListGridField name = new ListGridField("name", "Name");
+		ListGridField options = new ListGridField("options", "Options");
 		
 		ListGrid listGrid = new ListGrid();
 		listGrid.setCanRemoveRecords(true);		  
@@ -61,12 +60,4 @@ public class QuicklistViewImpl implements QuicklistView {
 	public void addListener(QuicklistViewListener listener) {
 		listeners.add(listener);
 	}
-
-	@Override
-	public void draw() {
-		if(wrappingWidget instanceof BaseWidget) {
-			((BaseWidget) wrappingWidget).draw();
-		}
-	}
-
 }

@@ -66,7 +66,7 @@
 		<version.fest.assert>1.4</version.fest.assert>
 
 		<!-- GWT version -->
-		<version.gwt>2.7.0</version.gwt>
+		<version.gwt>2.6.1</version.gwt>
 
 		<!-- SmartGWT version -->
 		<version.smartgwt>5.0-p20141121</version.smartgwt>

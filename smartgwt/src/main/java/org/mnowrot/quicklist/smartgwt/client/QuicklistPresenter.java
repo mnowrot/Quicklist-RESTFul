@@ -21,7 +21,6 @@ public class QuicklistPresenter implements QuicklistViewListener {
 		
 		view.addListener(this);
 		RootPanel.get("quicklistAppContainer").add(view.getWrappingWidget());
-		view.draw();
 	}
 
 }
