@@ -104,6 +104,7 @@
 					<runTarget>quicklist.html</runTarget>
 					<hostedWebapp>${webapp.directory}</hostedWebapp>
 					<i18nMessagesBundle>org.mnowrot.quicklist.smartgwt.client.Messages</i18nMessagesBundle>
+					<extraJvmArgs>-Xmx1g</extraJvmArgs>
 				</configuration>
 			</plugin>
 

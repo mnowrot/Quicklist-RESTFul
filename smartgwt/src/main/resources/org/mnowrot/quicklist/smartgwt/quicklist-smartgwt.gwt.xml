@@ -11,7 +11,7 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
 	<!-- Other module inherits -->
-	<inherits name="com.smartgwt.SmartGwt" />
+	<inherits name="com.smartgwt.SmartGwtNoScriptNoTheme" />
 	<inherits name="com.smartclient.theme.enterprise.EnterpriseResources" />
 	<inherits name="com.smartgwt.tools.SmartGwtTools" />
 
