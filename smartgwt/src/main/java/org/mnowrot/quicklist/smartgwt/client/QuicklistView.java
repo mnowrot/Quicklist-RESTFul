@@ -17,7 +17,7 @@ interface QuicklistView {
 
 	Widget getWrappingWidget();
 
-	void addListener(QuicklistViewListener quicklistPresenter);
+	void addListener(QuicklistViewListener listener);
 }
 
 	

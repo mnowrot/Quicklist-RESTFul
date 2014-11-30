@@ -58,12 +58,13 @@
 			<groupId>com.isomorphic.smartgwt.lgpl</groupId>
 			<artifactId>smartgwt-lgpl</artifactId>
 			<version>${version.smartgwt}</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.isomorphic.smartgwt.lgpl</groupId>
 			<artifactId>smartgwt-skins</artifactId>
 			<version>${version.smartgwt}</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
