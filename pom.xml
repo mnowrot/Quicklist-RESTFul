@@ -69,7 +69,7 @@
 		<version.gwt>2.7.0</version.gwt>
 
 		<!-- SmartGWT version -->
-		<version.smartgwt>5.0-p20141121</version.smartgwt>
+		<version.smartgwt>5.0-p20141123</version.smartgwt>
 
 		<!-- Validation API -->
 		<version.javax.validation>1.0.0.GA</version.javax.validation>
