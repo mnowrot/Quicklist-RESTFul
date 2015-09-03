@@ -19,51 +19,19 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<packaging>jar</packaging>
-	<artifactId>quicklist-testwebdriver</artifactId>
-	<name>Quicklist functional tests</name>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${version.testng}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.easytesting</groupId>
-			<artifactId>fest-assert</artifactId>
-			<version>${version.fest.assert}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>${version.selenium.java}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<packaging>war</packaging>
+	<artifactId>quicklist-angularjs2</artifactId>
+	<name>Quicklist client side written in AngularJS 2</name>
 
 	<build>
 		<plugins>
+			<!-- JBoss AS plugin to deploy war -->
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${version.compiler.plugin}</version>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
 				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
 					<skip>false</skip>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${version.surefire.plugin}</version>
-				<configuration>
-					<skipTests>false</skipTests>
-					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/suite-angularjs.xml</suiteXmlFile>
-						<suiteXmlFile>src/test/resources/suite-angularjs2.xml</suiteXmlFile>
-					</suiteXmlFiles>
 				</configuration>
 			</plugin>
 		</plugins>

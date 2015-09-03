@@ -131,6 +131,7 @@
 	<modules>
 		<module>core</module>
 		<module>angularjs</module>
+		<module>angularjs2</module>
 	</modules>
 
 	<profiles>

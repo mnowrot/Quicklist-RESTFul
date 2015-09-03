@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html ng-app="quicklistApp">
+<head>
+<title>Quicklist Editor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="lib/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/style.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-controller="ListManager">
+	<!-- List refresh failure alert -->
+	<div id="listRefreshFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot reload item list due to a server-side
+		failure. Please refresh the page.
+	</div>
+	<!-- List addition failure alert -->
+	<div id="listAddFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot add an item to the list due to a
+		server-side failure. Please refresh the page.
+	</div>
+	<!-- Item deletion failure alert -->
+	<div id="listRemoveFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot remove an item from the list due to a
+		server-side failure. Please refresh the page.
+	</div>
+	<!-- Item deletion success alert -->
+	<div id="listRemoveSuccessAlert"
+		class="alert alert-success alert-dismissable fade">Successfully
+		removed item '{{itemRemoved.name}}'.</div>
+	<!-- Item edition failure alert -->
+	<div id="listEditFailAlert"
+		class="alert alert-danger alert-dismissable fade">
+		<strong>Error!</strong> Cannot edit an item on the list due to a
+		server-side failure. Please retry the edition.
+	</div>
+	<!-- /.alerts -->
+
+	<div class="jumbotron">
+		<h1>Enter a new list item:</h1>
+		<form class="form-inline" role="form">
+			<div class="form-group">
+				<label class="sr-only" for="newListItemInput">New list item</label>
+				<input type="text" class="form-control wide" id="newListItemInput"
+					placeholder="New list item" ng-model="newItemName" ng-keyup="saveNewListItemOnEnter($event)">
+			</div>
+			<button type="button" class="btn btn-default btn-margin" id="addNewListItemButton"
+				ng-click="addItem()">Submit</button>
+		</form>
+	</div>
+
+	<table id="listItemsTable" class="table table-striped">
+		<thead>
+			<tr>
+				<th class="idColumn">ID#</th>
+				<th class="nameColumn">Name</th>
+				<th>Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in items">
+				<td>{{item.id}}</td>
+				<td ng-hide="isItemEdited(item)" ng-dblclick="editItem(item)">{{item.name}}</td>
+				<td ng-show="isItemEdited(item)">
+					<input type="text" class="form-control tabular" ng-model="itemToEdit.name" 
+					ng-keyup="saveEditedListItemOnEnter($event)" focus-id="inputListItemName">
+				</td>
+				<td>
+					<button type="button" class="btn btn-default btn-xs" id="editItemButton"
+						ng-hide="isItemEdited(item)" ng-click="editItem(item)">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs" id="saveEditedItemButton"
+						ng-show="isItemEdited(item)" ng-click="saveEditedItem()">
+						<span class="glyphicon glyphicon-ok-circle"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs" id="cancelItemEditionButton"
+						ng-show="isItemEdited(item)" ng-click="finishItemEdition()">
+						<span class="glyphicon glyphicon-remove-circle"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs" id="removeItemButton"
+						ng-hide="isItemEdited(item)" ng-click="openRemoveItemModal(item)">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+				</td>
+			</tr>
+			<tr ng-if="noItems()">
+				<td colspan=3>The list is empty.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- List item delete "Are you sure?" modal -->
+	<div class="modal fade" id="removeYesNoModal" tabindex="-1"
+		role="dialog" aria-labelledby=removeYesNoModalLabel aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Remove List Item</h4>
+				</div>
+				<div class="modal-body">Are you sure you wish to remove
+					'{{itemToRemove.name}}'?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"  id="confirmItemRemovalButton"
+						ng-click="removeItem()">Yes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="lib/js/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="lib/js/bootstrap.min.js"></script>
+	<!-- AngularJS -->
+	<script src="lib/js/angular.min.js"></script>
+
+	<!-- Local JS -->
+	<script src="js/application.js"></script>
+	<script src="js/directives.js"></script>
+	<script src="js/factories.js"></script>
+	<script src="js/view.js"></script>
+	<script src="js/controller.js"></script>
+</body>
+</html>
