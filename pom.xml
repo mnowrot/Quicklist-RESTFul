@@ -39,9 +39,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
 		<!-- Core Maven plugins versions -->
-		<version.compiler.plugin>3.1</version.compiler.plugin>
-		<version.war.plugin>2.4</version.war.plugin>
-		<version.surefire.plugin>2.17</version.surefire.plugin>
+		<version.compiler.plugin>3.3</version.compiler.plugin>
+		<version.war.plugin>2.6</version.war.plugin>
+		<version.surefire.plugin>2.18.1</version.surefire.plugin>
 
 		<!-- JAVA version -->
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -51,22 +51,24 @@
 		<version.javaee.api>7.0</version.javaee.api>
 
 		<!-- Wildfly version -->
-		<version.wildfly>8.0.0.Final</version.wildfly>
+		<version.wildfly>9.0.1.Final</version.wildfly>
 		
 		<!-- WildFly deployer plugin version -->
-		<version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
+		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 		
 		<!-- Arquillian BOM version -->
-		<version.arquillian.bom>1.1.4.Final</version.arquillian.bom>
+		<version.arquillian.bom>1.1.8.Final</version.arquillian.bom>
+
+		<version.wildfly.arquillian.container.remote>8.2.1.Final</version.wildfly.arquillian.container.remote>
 		
 		<!-- TestNG version -->
-		<version.testng>6.8.8</version.testng>
+		<version.testng>6.9.6</version.testng>
 		
 		<!-- Fest Assert version -->
 		<version.fest.assert>1.4</version.fest.assert>
 
 		<!-- Selenium version -->
-		<version.selenium.java>2.41.0</version.selenium.java>
+		<version.selenium.java>2.47.1</version.selenium.java>
 	</properties>
 
 	<pluginRepositories>
